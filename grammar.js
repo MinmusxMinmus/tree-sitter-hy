@@ -204,7 +204,6 @@ module.exports = grammar({
             $.symbol,
             $.keyword,
             $._keywords_with_values,
-            $._string,
             $.list,
             $.set,
             $.dictionary,
@@ -212,6 +211,10 @@ module.exports = grammar({
             $.expression,
         ),
 
+        _literal: $ => choice(
+            $._number,
+            $._string,
+        ),
         expression: $ => seq(
             /\(/,
             repeat(
