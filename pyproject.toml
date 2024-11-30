@@ -1,0 +1,30 @@
+[build-system]
+requires = ["setuptools>=42", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "tree-sitter-hy"
+description = "Hy grammar for tree-sitter"
+version = "0.1.0"
+keywords = ["incremental", "parsing", "tree-sitter", "hy"]
+classifiers = [
+  "Intended Audience :: Developers",
+  "License :: OSI Approved :: MIT License",
+  "Topic :: Software Development :: Compilers",
+  "Topic :: Text Processing :: Linguistic",
+  "Typing :: Typed",
+]
+authors = [{ name = "MinmusxMinmus", email = "git.1khdc@simplelogin.com" }]
+requires-python = ">=3.9"
+license.text = "GPL3"
+readme = "README.md"
+
+[project.urls]
+Homepage = "https://github.com/minmusxminmus/tree-sitter-hy"
+
+[project.optional-dependencies]
+core = ["tree-sitter~=0.22"]
+
+[tool.cibuildwheel]
+build = "cp39-*"
+build-frontend = "build"

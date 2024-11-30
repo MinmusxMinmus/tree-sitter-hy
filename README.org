@@ -1,0 +1,7 @@
+#+TITLE: tree-sitter-hy
+
+Tree-sitter grammar for [[https://hylang.org/][Hy]].
+
+Originally planned to be based on [[https://github.com/kwshi/tree-sitter-hy][kwshi/tree-sitter-hy]], but I decided to try my
+hand from scratch.  I did have a look at [[https://github.com/kwshi/tree-sitter-hy/issues/1][this issue]], which noted a couple
+improvements for kwshi's implementation, and I'll try to implement them.
