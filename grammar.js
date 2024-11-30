@@ -9,7 +9,7 @@
 
 const rx = {
     shebang: /#!~?(?:\/(\w*))+(?: .*)?/,
-    comment: /;.*/,
+    comment: /;[^\n]*/,
     discard_prefix: /#_/,
 
     // Symbol catch-all
