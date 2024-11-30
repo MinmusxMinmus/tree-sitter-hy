@@ -183,7 +183,7 @@ module.exports = grammar({
     word: $ => $.symbol,
 
     rules: {
-        source_file: $ => seq(
+        program: $ => seq(
             optional(
                 $.shebang
             ),
