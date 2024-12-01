@@ -351,6 +351,10 @@ module.exports = grammar({
         _string: $ => choice(
             $.string,
             $.fstring,
+            $.bstring,
+            $.raw_string,
+            $.raw_fstring,
+            $.raw_bstring
         ),
 
         string: _ => token(
@@ -376,6 +380,51 @@ module.exports = grammar({
                 )
             ),
             /"/
+        ),
+
+        bstring: _ => token(
+            seq(
+                /b"/,
+                repeat(
+                    rx.string
+                ),
+                /"/
+            )
+        ),
+
+        raw_string: _ => token(
+            seq(
+                /r"/,
+                repeat(
+                    rx.string
+                ),
+                /"/
+            )
+        ),
+
+        raw_fstring: $ => seq(
+            /(rf)|(fr)"/,
+            repeat(
+                choice(
+                    rx.fstring,
+                    seq(
+                        /\{/,
+                        $._form,
+                        /\}/
+                    )
+                )
+            ),,
+            /"/
+        ),
+
+        raw_bstring: _ => token(
+            seq(
+                /(rb)|(br)"/,
+                repeat(
+                    rx.string
+                ),
+                /"/
+            )
         ),
     }
 });
