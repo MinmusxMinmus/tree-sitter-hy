@@ -229,19 +229,19 @@ module.exports = grammar({
         ),
 
         _number: $ => choice(
-            $._integer,
+            $.integer,
             $.float,
             $.imaginary_number
         ),
 
-        _integer: $ => choice(
-            $.binary_integer,
-            $.hexadecimal_integer,
-            $.octal_integer,
-            $.decimal_integer
+        integer: $ => choice(
+            $.binary,
+            $.hexadecimal,
+            $.octal,
+            $.decimal
         ),
 
-        decimal_integer: _ => token(
+        decimal: _ => token(
             seq(
                 optional(
                     rx.sign,
@@ -250,7 +250,7 @@ module.exports = grammar({
             )
         ),
 
-        binary_integer: _ => token(
+        binary: _ => token(
             seq(
                 optional(
                     rx.sign,
@@ -259,7 +259,7 @@ module.exports = grammar({
             )
         ),
 
-        hexadecimal_integer: _ => token(
+        hexadecimal: _ => token(
             seq(
                 optional(
                     rx.sign,
@@ -268,7 +268,7 @@ module.exports = grammar({
             )
         ),
 
-        octal_integer: _ => token(
+        octal: _ => token(
             seq(
                 optional(
                     rx.sign,
