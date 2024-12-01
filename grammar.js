@@ -215,6 +215,86 @@ module.exports = grammar({
             $._number,
             $._string,
         ),
+
+        _number: $ => choice(
+            $._integer,
+            $.float,
+            $.imaginary_number
+        ),
+
+        _integer: $ => choice(
+            $.binary_integer,
+            $.hexadecimal_integer,
+            $.octal_integer,
+            $.decimal_integer
+        ),
+
+        decimal_integer: _ => token(
+            seq(
+                optional(
+                    rx.sign,
+                ),
+                rx.decinteger
+            )
+        ),
+
+        binary_integer: _ => token(
+            seq(
+                optional(
+                    rx.sign,
+                ),
+                rx.bininteger
+            )
+        ),
+
+        hexadecimal_integer: _ => token(
+            seq(
+                optional(
+                    rx.sign,
+                ),
+                rx.hexinteger
+            )
+        ),
+
+        octal_integer: _ => token(
+            seq(
+                optional(
+                    rx.sign,
+                ),
+                rx.octinteger
+            )
+        ),
+
+        float: _ => token(
+            seq(
+                optional(
+                    rx.sign
+                ),
+                choice(
+                    rx.pointfloat,
+                    rx.exponentfloat
+                )
+            )
+        ),
+
+        imaginary_number: _ => token(
+            seq(
+                optional(
+                    rx.sign
+                ),
+                rx.imagnumber
+            )
+        ),
+
+        boolean: _ => token(
+            choice(
+                lt.true,
+                lt.false
+            )
+        ),
+
+        none: _ => lt.none,
+
         expression: $ => seq(
             /\(/,
             repeat(
@@ -270,71 +350,19 @@ module.exports = grammar({
             $.none,
         ),
 
-        _literal: $ => choice(
-            $._number,
-        ),
-
-        _number: $ => choice(
-            $.integer,
-            $.float,
-            $.imaginary_number
-        ),
-
-        integer: _ => token(
-            seq(
-                optional(
-                    rx.sign
-                ),
-                choice(
-                    rx.decinteger,
-                    rx.bininteger,
-                    rx.octinteger,
-                    rx.hexinteger
-                )
-            )
-        ),
-
-        float: _ => token(
-            seq(
-                optional(
-                    rx.sign
-                ),
-                choice(
-                    rx.pointfloat,
-                    rx.exponentfloat
-                )
-            )
-        ),
-
-        imaginary_number: _ => token(
-            seq(
-                optional(
-                    rx.sign
-                ),
-                rx.imagnumber
-            )
-        ),
-
-        boolean: _ => token(
-            choice(
-                lt.true,
-                lt.false
-            )
-        ),
-
-        none: _ => lt.none,
-
         _string: $ => choice(
             $.string,
-            $.fstring
+            $.fstring,
         ),
 
-        string: $ => seq(
-            /"/,
-            repeat(
-                rx.string
-            ),
-            /"/
+        string: _ => token(
+            seq(
+                /"/,
+                repeat(
+                    rx.string
+                ),
+                /"/
+            )
         ),
 
         fstring: $ => seq(
