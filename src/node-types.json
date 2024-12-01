@@ -27,7 +27,19 @@
           "named": true
         },
         {
+          "type": "bstring",
+          "named": true
+        },
+        {
+          "type": "complex",
+          "named": true
+        },
+        {
           "type": "dictionary",
+          "named": true
+        },
+        {
+          "type": "discard",
           "named": true
         },
         {
@@ -40,10 +52,6 @@
         },
         {
           "type": "fstring",
-          "named": true
-        },
-        {
-          "type": "imaginary_number",
           "named": true
         },
         {
@@ -64,6 +72,18 @@
         },
         {
           "type": "quoted_expression",
+          "named": true
+        },
+        {
+          "type": "raw_bstring",
+          "named": true
+        },
+        {
+          "type": "raw_fstring",
+          "named": true
+        },
+        {
+          "type": "raw_string",
           "named": true
         },
         {
@@ -82,6 +102,104 @@
     }
   },
   {
+    "type": "discard",
+    "named": true,
+    "fields": {
+      "discarded_form": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "boolean",
+            "named": true
+          },
+          {
+            "type": "bstring",
+            "named": true
+          },
+          {
+            "type": "complex",
+            "named": true
+          },
+          {
+            "type": "dictionary",
+            "named": true
+          },
+          {
+            "type": "discard",
+            "named": true
+          },
+          {
+            "type": "expression",
+            "named": true
+          },
+          {
+            "type": "float",
+            "named": true
+          },
+          {
+            "type": "fstring",
+            "named": true
+          },
+          {
+            "type": "integer",
+            "named": true
+          },
+          {
+            "type": "keyword",
+            "named": true
+          },
+          {
+            "type": "list",
+            "named": true
+          },
+          {
+            "type": "none",
+            "named": true
+          },
+          {
+            "type": "quoted_expression",
+            "named": true
+          },
+          {
+            "type": "raw_bstring",
+            "named": true
+          },
+          {
+            "type": "raw_fstring",
+            "named": true
+          },
+          {
+            "type": "raw_string",
+            "named": true
+          },
+          {
+            "type": "set",
+            "named": true
+          },
+          {
+            "type": "string",
+            "named": true
+          },
+          {
+            "type": "symbol",
+            "named": true
+          }
+        ]
+      }
+    },
+    "children": {
+      "multiple": false,
+      "required": true,
+      "types": [
+        {
+          "type": "discard_prefix",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
     "type": "expression",
     "named": true,
     "fields": {},
@@ -94,7 +212,19 @@
           "named": true
         },
         {
+          "type": "bstring",
+          "named": true
+        },
+        {
+          "type": "complex",
+          "named": true
+        },
+        {
           "type": "dictionary",
+          "named": true
+        },
+        {
+          "type": "discard",
           "named": true
         },
         {
@@ -107,10 +237,6 @@
         },
         {
           "type": "fstring",
-          "named": true
-        },
-        {
-          "type": "imaginary_number",
           "named": true
         },
         {
@@ -131,6 +257,18 @@
         },
         {
           "type": "quoted_expression",
+          "named": true
+        },
+        {
+          "type": "raw_bstring",
+          "named": true
+        },
+        {
+          "type": "raw_fstring",
+          "named": true
+        },
+        {
+          "type": "raw_string",
           "named": true
         },
         {
@@ -161,7 +299,19 @@
           "named": true
         },
         {
+          "type": "bstring",
+          "named": true
+        },
+        {
+          "type": "complex",
+          "named": true
+        },
+        {
           "type": "dictionary",
+          "named": true
+        },
+        {
+          "type": "discard",
           "named": true
         },
         {
@@ -174,10 +324,6 @@
         },
         {
           "type": "fstring",
-          "named": true
-        },
-        {
-          "type": "imaginary_number",
           "named": true
         },
         {
@@ -198,6 +344,18 @@
         },
         {
           "type": "quoted_expression",
+          "named": true
+        },
+        {
+          "type": "raw_bstring",
+          "named": true
+        },
+        {
+          "type": "raw_fstring",
+          "named": true
+        },
+        {
+          "type": "raw_string",
           "named": true
         },
         {
@@ -216,6 +374,33 @@
     }
   },
   {
+    "type": "integer",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": false,
+      "required": true,
+      "types": [
+        {
+          "type": "binary",
+          "named": true
+        },
+        {
+          "type": "decimal",
+          "named": true
+        },
+        {
+          "type": "hexadecimal",
+          "named": true
+        },
+        {
+          "type": "octal",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
     "type": "list",
     "named": true,
     "fields": {},
@@ -228,7 +413,19 @@
           "named": true
         },
         {
+          "type": "bstring",
+          "named": true
+        },
+        {
+          "type": "complex",
+          "named": true
+        },
+        {
           "type": "dictionary",
+          "named": true
+        },
+        {
+          "type": "discard",
           "named": true
         },
         {
@@ -241,10 +438,6 @@
         },
         {
           "type": "fstring",
-          "named": true
-        },
-        {
-          "type": "imaginary_number",
           "named": true
         },
         {
@@ -268,7 +461,115 @@
           "named": true
         },
         {
+          "type": "raw_bstring",
+          "named": true
+        },
+        {
+          "type": "raw_fstring",
+          "named": true
+        },
+        {
+          "type": "raw_string",
+          "named": true
+        },
+        {
           "type": "set",
+          "named": true
+        },
+        {
+          "type": "string",
+          "named": true
+        },
+        {
+          "type": "symbol",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "program",
+    "named": true,
+    "root": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": false,
+      "types": [
+        {
+          "type": "boolean",
+          "named": true
+        },
+        {
+          "type": "bstring",
+          "named": true
+        },
+        {
+          "type": "comment",
+          "named": true
+        },
+        {
+          "type": "complex",
+          "named": true
+        },
+        {
+          "type": "dictionary",
+          "named": true
+        },
+        {
+          "type": "discard",
+          "named": true
+        },
+        {
+          "type": "expression",
+          "named": true
+        },
+        {
+          "type": "float",
+          "named": true
+        },
+        {
+          "type": "fstring",
+          "named": true
+        },
+        {
+          "type": "integer",
+          "named": true
+        },
+        {
+          "type": "keyword",
+          "named": true
+        },
+        {
+          "type": "list",
+          "named": true
+        },
+        {
+          "type": "none",
+          "named": true
+        },
+        {
+          "type": "quoted_expression",
+          "named": true
+        },
+        {
+          "type": "raw_bstring",
+          "named": true
+        },
+        {
+          "type": "raw_fstring",
+          "named": true
+        },
+        {
+          "type": "raw_string",
+          "named": true
+        },
+        {
+          "type": "set",
+          "named": true
+        },
+        {
+          "type": "shebang",
           "named": true
         },
         {
@@ -298,6 +599,93 @@
     }
   },
   {
+    "type": "raw_fstring",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": false,
+      "types": [
+        {
+          "type": "boolean",
+          "named": true
+        },
+        {
+          "type": "bstring",
+          "named": true
+        },
+        {
+          "type": "complex",
+          "named": true
+        },
+        {
+          "type": "dictionary",
+          "named": true
+        },
+        {
+          "type": "discard",
+          "named": true
+        },
+        {
+          "type": "expression",
+          "named": true
+        },
+        {
+          "type": "float",
+          "named": true
+        },
+        {
+          "type": "fstring",
+          "named": true
+        },
+        {
+          "type": "integer",
+          "named": true
+        },
+        {
+          "type": "keyword",
+          "named": true
+        },
+        {
+          "type": "list",
+          "named": true
+        },
+        {
+          "type": "none",
+          "named": true
+        },
+        {
+          "type": "quoted_expression",
+          "named": true
+        },
+        {
+          "type": "raw_bstring",
+          "named": true
+        },
+        {
+          "type": "raw_fstring",
+          "named": true
+        },
+        {
+          "type": "raw_string",
+          "named": true
+        },
+        {
+          "type": "set",
+          "named": true
+        },
+        {
+          "type": "string",
+          "named": true
+        },
+        {
+          "type": "symbol",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
     "type": "set",
     "named": true,
     "fields": {},
@@ -310,7 +698,19 @@
           "named": true
         },
         {
+          "type": "bstring",
+          "named": true
+        },
+        {
+          "type": "complex",
+          "named": true
+        },
+        {
           "type": "dictionary",
+          "named": true
+        },
+        {
+          "type": "discard",
           "named": true
         },
         {
@@ -323,10 +723,6 @@
         },
         {
           "type": "fstring",
-          "named": true
-        },
-        {
-          "type": "imaginary_number",
           "named": true
         },
         {
@@ -350,6 +746,18 @@
           "named": true
         },
         {
+          "type": "raw_bstring",
+          "named": true
+        },
+        {
+          "type": "raw_fstring",
+          "named": true
+        },
+        {
+          "type": "raw_string",
+          "named": true
+        },
+        {
           "type": "set",
           "named": true
         },
@@ -363,94 +771,21 @@
         }
       ]
     }
-  },
-  {
-    "type": "source_file",
-    "named": true,
-    "root": true,
-    "fields": {},
-    "children": {
-      "multiple": true,
-      "required": false,
-      "types": [
-        {
-          "type": "boolean",
-          "named": true
-        },
-        {
-          "type": "comment",
-          "named": true
-        },
-        {
-          "type": "dictionary",
-          "named": true
-        },
-        {
-          "type": "expression",
-          "named": true
-        },
-        {
-          "type": "float",
-          "named": true
-        },
-        {
-          "type": "fstring",
-          "named": true
-        },
-        {
-          "type": "imaginary_number",
-          "named": true
-        },
-        {
-          "type": "integer",
-          "named": true
-        },
-        {
-          "type": "keyword",
-          "named": true
-        },
-        {
-          "type": "list",
-          "named": true
-        },
-        {
-          "type": "none",
-          "named": true
-        },
-        {
-          "type": "quoted_expression",
-          "named": true
-        },
-        {
-          "type": "set",
-          "named": true
-        },
-        {
-          "type": "shebang",
-          "named": true
-        },
-        {
-          "type": "string",
-          "named": true
-        },
-        {
-          "type": "symbol",
-          "named": true
-        }
-      ]
-    }
-  },
-  {
-    "type": "string",
-    "named": true,
-    "fields": {}
   },
   {
     "type": "'",
     "named": false
   },
   {
+    "type": "binary",
+    "named": true
+  },
+  {
     "type": "boolean",
+    "named": true
+  },
+  {
+    "type": "bstring",
     "named": true
   },
   {
@@ -458,15 +793,23 @@
     "named": true
   },
   {
+    "type": "complex",
+    "named": true
+  },
+  {
+    "type": "decimal",
+    "named": true
+  },
+  {
+    "type": "discard_prefix",
+    "named": true
+  },
+  {
     "type": "float",
     "named": true
   },
   {
-    "type": "imaginary_number",
-    "named": true
-  },
-  {
-    "type": "integer",
+    "type": "hexadecimal",
     "named": true
   },
   {
@@ -478,7 +821,23 @@
     "named": true
   },
   {
+    "type": "octal",
+    "named": true
+  },
+  {
+    "type": "raw_bstring",
+    "named": true
+  },
+  {
+    "type": "raw_string",
+    "named": true
+  },
+  {
     "type": "shebang",
+    "named": true
+  },
+  {
+    "type": "string",
     "named": true
   },
   {
