@@ -264,9 +264,6 @@ module.exports = grammar({
                     number.sign
                 ),
                 number.binary_radix,
-                repeat(
-                    number.separator
-                ),
                 number.binary_digit,
                 repeat(
                     choice(
@@ -283,9 +280,6 @@ module.exports = grammar({
                     number.sign
                 ),
                 number.hexadecimal_radix,
-                repeat(
-                    number.separator
-                ),
                 number.hexadecimal_digit,
                 repeat(
                     choice(
@@ -302,9 +296,6 @@ module.exports = grammar({
                     number.sign
                 ),
                 number.octal_radix,
-                repeat(
-                    number.separator
-                ),
                 number.octal_digit,
                 repeat(
                     choice(
