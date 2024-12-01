@@ -7,6 +7,20 @@
 /// <reference types="tree-sitter-cli/dsl" />
 // @ts-check
 
+const number = {
+    sign: /[+-]?[,_]*/,
+    separator: /[,_]/,
+    decimal_digit: /[0-9]/,
+    binary_radix: /0[,_]*[bB][,_]*/,
+    binary_digit: /[01]/,
+    hexadecimal_radix: /0[,_]*[xX][,_]*/,
+    hexadecimal_digit: /[0-9a-fA-F]/,
+    octal_radix: /0[,_]*[oO][,_]*/,
+    octal_digit: /[0-7]/,
+    nan: /NaN/,
+    infinity: /Inf/,
+}
+
 const rx = {
     shebang: /#![^\n]*/,
     comment: /;[^\n]*/,
@@ -18,18 +32,6 @@ const rx = {
     // Strings
     string: /(?:\\(?:.|\s))|[^"\\]/,
     fstring: /(?:\{\{)|(?:\}\})|(?:\\(?:.|\s))|[^"\\\{\}]/,
-
-    // Numeric literals.  Note that Hy can parse numbers that Python
-    // can't, for example +_0.  Therefore, the parsing for numbers is
-    // slightly different.
-    sign: /[+-]?_*/,
-    decinteger: /(?:(?:[1-9](?:_*[0-9])*)|(?:0(?:_*0)*))/,
-    bininteger: /0[bB](?:_*[01])+/,
-    octinteger: /0[oO](?:_*[0-7])+/,
-    hexinteger: /0[xX](?:_*[a-fA-F0-9])+/,
-    pointfloat: /(?:(?:[0-9](?:_*[0-9])*)?\.(?:[0-9](?:_*[0-9])*))|((?:[0-9](?:_*[0-9])*)\.)/,
-    exponentfloat: /(?:(?:[0-9](?:_*[0-9])*)|(?:(?:[0-9](?:_*[0-9])*)?\.(?:[0-9](?:_*[0-9])*))|((?:[0-9](?:_*[0-9])*)\.))[eE][-+]?(?:[0-9](?:_*[0-9])*)/,
-    imagnumber: /(?:(?:(?:(?:[0-9](?:_*[0-9])*)?\.(?:[0-9](?:_*[0-9])*))|((?:[0-9](?:_*[0-9])*)\.)|(?:(?:[0-9](?:_*[0-9])*)|(?:(?:[0-9](?:_*[0-9])*)?\.(?:[0-9](?:_*[0-9])*))|((?:[0-9](?:_*[0-9])*)\.))[eE][-+]?(?:[0-9](?:_*[0-9])*))|(?:[0-9](?:_*[0-9])*))[jJ]/,
 }
 
 const lt = {
@@ -244,47 +246,169 @@ module.exports = grammar({
         decimal: _ => token(
             seq(
                 optional(
-                    rx.sign,
+                    number.sign,
                 ),
-                rx.decinteger
+                number.decimal_digit,
+                repeat(
+                    choice(
+                        number.separator,
+                        number.decimal_digit
+                    )
+                )
             )
         ),
 
         binary: _ => token(
             seq(
                 optional(
-                    rx.sign,
+                    number.sign
                 ),
-                rx.bininteger
+                number.binary_radix,
+                repeat(
+                    number.separator
+                ),
+                number.binary_digit,
+                repeat(
+                    choice(
+                        number.separator,
+                        number.binary_digit
+                    )
+                )
             )
         ),
 
         hexadecimal: _ => token(
             seq(
                 optional(
-                    rx.sign,
+                    number.sign
                 ),
-                rx.hexinteger
+                number.hexadecimal_radix,
+                repeat(
+                    number.separator
+                ),
+                number.hexadecimal_digit,
+                repeat(
+                    choice(
+                        number.separator,
+                        number.hexadecimal_digit
+                    )
+                )
             )
         ),
 
         octal: _ => token(
             seq(
                 optional(
-                    rx.sign,
+                    number.sign
                 ),
-                rx.octinteger
+                number.octal_radix,
+                repeat(
+                    number.separator
+                ),
+                number.octal_digit,
+                repeat(
+                    choice(
+                        number.separator,
+                        number.hexadecimal_digit
+                    )
+                )
             )
         ),
 
-        float: _ => token(
+        float: $ => choice(
+            $.nan,
+            $.infinity,
+            $.numeric_float
+        ),
+
+        nan: _ => token(
             seq(
                 optional(
-                    rx.sign
+                    number.sign
                 ),
-                choice(
-                    rx.pointfloat,
-                    rx.exponentfloat
+                number.nan
+            )
+        ),
+
+        infinity: _ => token(
+            seq(
+                optional(
+                    number.sign
+                ),
+                number.infinity
+            )
+        ),
+
+        numeric_float: _ => token(
+            choice(
+                seq(
+                    optional(
+                        seq(
+                            optional(
+                                number.sign
+                            ),
+                            number.decimal_digit,
+                            repeat(
+                                choice(
+                                    number.separator,
+                                    number.decimal_digit
+                                )
+                            )
+                        ),
+                    ),
+                    '.',
+                    repeat(
+                        choice(
+                            number.separator,
+                            number.decimal_digit
+                        )
+                    ),
+                    optional(
+                        seq(
+                            /[eE]/,
+                            optional(
+                                number.sign
+                            ),
+                            number.decimal_digit,
+                            repeat(
+                                choice(
+                                    number.separator,
+                                    number.decimal_digit
+                                )
+                            )
+                        ),
+                    )
+                ),
+                seq(
+                    optional(
+                        number.sign
+                    ),
+                    '.',
+                    repeat(
+                        number.separator
+                    ),
+                    number.decimal_digit,
+                    repeat(
+                        choice(
+                            number.separator,
+                            number.decimal_digit
+                        )
+                    ),
+                    optional(
+                        seq(
+                            /[eE]/,
+                            optional(
+                                number.sign
+                            ),
+                            number.decimal_digit,
+                            repeat(
+                                choice(
+                                    number.separator,
+                                    number.decimal_digit
+                                )
+                            )
+                        )
+                    )
                 )
             )
         ),
@@ -292,9 +416,28 @@ module.exports = grammar({
         complex: _ => token(
             seq(
                 optional(
-                    rx.sign
+                    number.sign,
                 ),
-                rx.imagnumber
+                optional(
+                    seq(
+                        number.decimal_digit,
+                        repeat(
+                            choice(
+                                number.separator,
+                                number.decimal_digit
+                            )
+                        ),
+                        '[+-]'
+                    )
+                ),
+                number.decimal_digit,
+                repeat(
+                    choice(
+                        number.separator,
+                        number.decimal_digit
+                    )
+                ),
+                /[jJ]/
             )
         ),
 
