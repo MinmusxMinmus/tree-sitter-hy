@@ -16,11 +16,10 @@ const rx = {
     symbol: /[^\s\(\)\[\]\{\}#.;:"'`~][^\s\(\)\[\]\{\}.#;"'`~]*/,
     keyword: /:[^\s\(\)\[\]\{\}#.;"'`~]+/,
 
-    // String catch-all
-    string: /(?:\\.)|[^"]/,
+    // Strings
+    string: /(?:\\.)|[^"\\]/,
+    fstring: /(?:\\.)|[^"\\\{]/,  // Also requires { escaped.
 
-    // Fstring body: the same as string, but also requires { escaped.
-    fstring: /(?:\\.)|[^"\{]/,
 
     // Numeric literals, as per the official Python docs.
     sign: /[+-]?/,
