@@ -199,6 +199,8 @@ module.exports = grammar({
             $._form,
         ),
 
+        comment: _ => rx.comment,
+
         _form: $ => choice(
             $._literal,
             $.symbol,
@@ -307,8 +309,6 @@ module.exports = grammar({
             lt.sh_quote,
             $.expression
         ),
-
-        comment: _ => rx.comment,
 
         discard_prefix: _ => rx.discard_prefix,
 
