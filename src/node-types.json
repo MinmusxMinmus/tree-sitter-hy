@@ -287,6 +287,29 @@
     }
   },
   {
+    "type": "float",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": false,
+      "required": true,
+      "types": [
+        {
+          "type": "infinity",
+          "named": true
+        },
+        {
+          "type": "nan",
+          "named": true
+        },
+        {
+          "type": "numeric_float",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
     "type": "fstring",
     "named": true,
     "fields": {},
@@ -805,11 +828,11 @@
     "named": true
   },
   {
-    "type": "float",
+    "type": "hexadecimal",
     "named": true
   },
   {
-    "type": "hexadecimal",
+    "type": "infinity",
     "named": true
   },
   {
@@ -817,7 +840,15 @@
     "named": true
   },
   {
+    "type": "nan",
+    "named": true
+  },
+  {
     "type": "none",
+    "named": true
+  },
+  {
+    "type": "numeric_float",
     "named": true
   },
   {
