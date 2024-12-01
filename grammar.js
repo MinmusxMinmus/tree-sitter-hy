@@ -413,7 +413,7 @@ module.exports = grammar({
                         /\}/
                     )
                 )
-            ),,
+            ),
             /"/
         ),
 
