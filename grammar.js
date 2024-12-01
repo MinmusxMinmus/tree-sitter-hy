@@ -18,7 +18,7 @@ const rx = {
 
     // Strings
     string: /(?:\\(?:.|\s))|[^"\\]/,
-    fstring: /(?:\\(?:.|\s))|[^"\\\{]/,
+    fstring: /(?:\{\{)|(?:\}\})|(?:\\(?:.|\s))|[^"\\\{\}]/,
 
     // Numeric literals, as per the official Python docs.
     sign: /[+-]?/,
