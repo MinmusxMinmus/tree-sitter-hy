@@ -366,14 +366,12 @@ module.exports = grammar({
         fstring: $ => seq(
             /f"/,
             repeat(
-                seq(
+                choice(
                     rx.fstring,
-                    optional(
-                        seq(
-                            /\{/,
-                            $._form,
-                            /\}/
-                        )
+                    seq(
+                        /\{/,
+                        $._form,
+                        /\}/
                     )
                 )
             ),
