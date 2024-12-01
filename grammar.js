@@ -231,7 +231,7 @@ module.exports = grammar({
         _number: $ => choice(
             $.integer,
             $.float,
-            $.imaginary_number
+            $.complex
         ),
 
         integer: $ => choice(
@@ -289,7 +289,7 @@ module.exports = grammar({
             )
         ),
 
-        imaginary_number: _ => token(
+        complex: _ => token(
             seq(
                 optional(
                     rx.sign
