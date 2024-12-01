@@ -17,8 +17,8 @@ const number = {
     hexadecimal_digit: /[0-9a-fA-F]/,
     octal_radix: /0[,_]*[oO][,_]*/,
     octal_digit: /[0-7]/,
-    nan: /NaN/,
-    infinity: /Inf/,
+    nan: 'NaN',
+    infinity: 'Inf',
 }
 
 const rx = {
