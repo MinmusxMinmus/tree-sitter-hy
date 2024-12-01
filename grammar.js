@@ -22,7 +22,7 @@ const rx = {
 
     // Numeric literals, as per the official Python docs.
     sign: /[+-]?/,
-    decinteger: /[1-9](?:_?[0-9])*/,
+    decinteger: /(?:(?:[1-9](?:_?[0-9])*)|(?:0(?:_?0)*))/,
     bininteger: /0[bB](?:_?[01])+/,
     octinteger: /0[oO](?:_?[0-7])+/,
     hexinteger: /0[xX](?:_?[a-fA-F0-9])+/,
