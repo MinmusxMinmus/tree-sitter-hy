@@ -231,13 +231,6 @@
             "value": "0[,_]*[bB][,_]*"
           },
           {
-            "type": "REPEAT",
-            "content": {
-              "type": "PATTERN",
-              "value": "[,_]"
-            }
-          },
-          {
             "type": "PATTERN",
             "value": "[01]"
           },
@@ -282,13 +275,6 @@
             "value": "0[,_]*[xX][,_]*"
           },
           {
-            "type": "REPEAT",
-            "content": {
-              "type": "PATTERN",
-              "value": "[,_]"
-            }
-          },
-          {
             "type": "PATTERN",
             "value": "[0-9a-fA-F]"
           },
@@ -331,13 +317,6 @@
           {
             "type": "PATTERN",
             "value": "0[,_]*[oO][,_]*"
-          },
-          {
-            "type": "REPEAT",
-            "content": {
-              "type": "PATTERN",
-              "value": "[,_]"
-            }
           },
           {
             "type": "PATTERN",
