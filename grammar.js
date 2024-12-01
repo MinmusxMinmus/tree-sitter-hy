@@ -17,9 +17,8 @@ const rx = {
     keyword: /:[^\s\(\)\[\]\{\}#.;"'`~]+/,
 
     // Strings
-    string: /(?:\\.)|[^"\\]/,
-    fstring: /(?:\\.)|[^"\\\{]/,  // Also requires { escaped.
-
+    string: /(?:\\(?:.|\s))|[^"\\]/,
+    fstring: /(?:\\(?:.|\s))|[^"\\\{]/,
 
     // Numeric literals, as per the official Python docs.
     sign: /[+-]?/,
