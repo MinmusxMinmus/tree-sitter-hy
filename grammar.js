@@ -8,7 +8,7 @@
 // @ts-check
 
 const rx = {
-    shebang: /#!~?(?:\/(\w*))+(?: .*)?/,
+    shebang: /#![^\n]*/,
     comment: /;[^\n]*/,
     discard_prefix: /#_/,
 
