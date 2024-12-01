@@ -10,7 +10,6 @@
 const rx = {
     shebang: /#![^\n]*/,
     comment: /;[^\n]*/,
-    discard_prefix: /#_/,
 
     // Symbol catch-all
     symbol: /[^\s\(\)\[\]\{\}#.;:"'`~][^\s\(\)\[\]\{\}.#;"'`~]*/,
@@ -175,6 +174,8 @@ const lt = {
     sh_quote: '\'',
     sh_unpackiterable: '#*',
     sh_unpackmapping: '#**',
+
+    discard_prefix: '#_'
 }
 
 module.exports = grammar({
@@ -202,6 +203,7 @@ module.exports = grammar({
         comment: _ => rx.comment,
 
         _form: $ => choice(
+            $.discard,
             $._literal,
             $.symbol,
             $.keyword,
@@ -212,6 +214,14 @@ module.exports = grammar({
             $.quoted_expression,
             $.expression,
         ),
+
+        discard: $ => seq(
+            $.discard_prefix,
+            /\s+/,
+            field("discarded_form", $._form)
+        ),
+
+        discard_prefix: $ => lt.discard_prefix,
 
         _literal: $ => choice(
             $._number,
@@ -309,8 +319,6 @@ module.exports = grammar({
             lt.sh_quote,
             $.expression
         ),
-
-        discard_prefix: _ => rx.discard_prefix,
 
         list: $ => seq(
             /\[/,
