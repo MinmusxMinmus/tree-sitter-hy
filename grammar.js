@@ -205,7 +205,7 @@ module.exports = grammar({
         comment: _ => rx.comment,
 
         _form: $ => choice(
-            $.discard,
+            $.reader_macro,
             $._literal,
             $.symbol,
             $.keyword,
@@ -215,6 +215,10 @@ module.exports = grammar({
             $.dictionary,
             $.quoted_expression,
             $.expression,
+        ),
+
+        reader_macro: $ => choice(
+            $.discard
         ),
 
         discard: $ => seq(
