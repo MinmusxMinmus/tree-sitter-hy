@@ -4,4 +4,23 @@ Tree-sitter grammar for [[https://hylang.org/][Hy]].
 
 Originally planned to be based on [[https://github.com/kwshi/tree-sitter-hy][kwshi/tree-sitter-hy]], but I decided to try my
 hand from scratch.  I did have a look at [[https://github.com/kwshi/tree-sitter-hy/issues/1][this issue]], which noted a couple
-improvements for kwshi's implementation, and I'll try to implement them.
+improvements for kwshi's implementation, and I'll try to implement them.  This
+grammar targets Hy version 1.0.0.
+
+* Motivation
+
+I mainly use Python at work, and Hy seemed to solve a couple of our issues so I
+looked into using it more often.  The language itself is pretty easy, but I
+didn't find many developer tools with all the features I wanted (I tried
+[[https://github.com/sakuraiyuta/hyuga][sakuraiyuta/hyuga]] and [[https://github.com/hylang/hy-mode][hylang/hy-mode]], but I felt like they were a bit lacking).
+I was incidentally also interested in messing around with tree-sitter for some
+personal projects, and a Lisp seemed like a very good starting point to get a
+grasp of the basics.  My eventual goal is to use this grammar as a building
+block for further improvements to my Hy development environment (I plan on
+making my own Hy language server, also for learning purposes).
+
+* Contributing
+
+I'm not looking for anything in particular.  Since this is partly a learning
+project I would like to implement most of it myself, but obviously any and all
+contributions are welcome.
