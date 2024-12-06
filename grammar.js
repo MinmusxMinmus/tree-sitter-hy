@@ -21,6 +21,13 @@ const number = {
     infinity: 'Inf',
 }
 
+const boolean = {
+    true: 'True',
+    false: 'False'
+}
+
+const none = 'None'
+
 const rx = {
     shebang: /#![^\n]*/,
     comment: /;[^\n]*/,
@@ -37,9 +44,6 @@ const rx = {
 const lt = {
     // Python keywords.  A lot of the keywords here are irrelevant to
     // us, or straight up not present in Hy.
-    false: 'False',
-    none: 'None',
-    true: 'True',
     and: 'and',
     as: 'as',  // Replaced with the :as form.  Example: (import sys :as systest)
     assert: 'assert',
@@ -232,6 +236,8 @@ module.exports = grammar({
         _literal: $ => choice(
             $._number,
             $._string,
+            $.boolean,
+            $.none
         ),
 
         _number: $ => choice(
@@ -468,12 +474,12 @@ module.exports = grammar({
 
         boolean: _ => token(
             choice(
-                lt.true,
-                lt.false
+                boolean.true,
+                boolean.false
             )
         ),
 
-        none: _ => lt.none,
+        none: _ => none,
 
         expression: $ => seq(
             /\(/,
@@ -521,10 +527,6 @@ module.exports = grammar({
 
         keyword: _ => rx.keyword,
 
-        _keywords_with_values: $ => choice(
-            $.boolean,
-            $.none,
-        ),
 
         _string: $ => choice(
             $.string,
