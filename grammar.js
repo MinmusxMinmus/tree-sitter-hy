@@ -506,8 +506,13 @@ module.exports = grammar({
         ellipsis: _ => identifier.ellipsis,
 
         symbol: _ => token(
-            repeat1(
-                identifier.valid_character
+            choice(
+                repeat1(
+                    identifier.valid_character
+                ),
+                repeat1(
+                    '.'
+                )
             )
         ),
 
