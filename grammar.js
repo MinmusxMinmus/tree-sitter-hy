@@ -361,6 +361,10 @@ module.exports = grammar({
                     ),
                     '.',
                     repeat(
+                        number.separator
+                    ),
+                    number.decimal_digit,
+                    repeat(
                         choice(
                             number.separator,
                             number.decimal_digit
