@@ -49,40 +49,44 @@ Discard prefix
 
 (program
   (shebang)
-  (discard
-    (discard_prefix)
-    discarded_form: (integer
-      (decimal)))
-  (expression
-    (integer
-      (decimal))
+  (reader_macro
     (discard
       (discard_prefix)
       discarded_form: (integer
-        (decimal)))
-    (integer
-      (decimal))
-    (integer
-      (decimal)))
-  (discard
-    (discard_prefix)
-    discarded_form: (expression
-      (integer
-        (decimal))
-      (integer
-        (decimal))
-      (integer
         (decimal))))
   (expression
     (integer
       (decimal))
+    (reader_macro
+      (discard
+        (discard_prefix)
+        discarded_form: (integer
+          (decimal))))
+    (integer
+      (decimal))
+    (integer
+      (decimal)))
+  (reader_macro
     (discard
       (discard_prefix)
       discarded_form: (expression
         (integer
           (decimal))
         (integer
-          (decimal))))
+          (decimal))
+        (integer
+          (decimal)))))
+  (expression
+    (integer
+      (decimal))
+    (reader_macro
+      (discard
+        (discard_prefix)
+        discarded_form: (expression
+          (integer
+            (decimal))
+          (integer
+            (decimal)))))
     (integer
       (decimal))
     (integer
@@ -90,19 +94,21 @@ Discard prefix
   (expression
     (integer
       (decimal))
-    (discard
-      (discard_prefix)
-      discarded_form: (expression
-        (discard
-          (discard_prefix)
-          discarded_form: (expression
-            (integer
-              (decimal))
-            (integer
-              (decimal))
-            (integer
-              (decimal))))
-        (integer
-          (decimal))))
+    (reader_macro
+      (discard
+        (discard_prefix)
+        discarded_form: (expression
+          (reader_macro
+            (discard
+             (discard_prefix)
+              discarded_form: (expression
+                (integer
+                  (decimal))
+                (integer
+                  (decimal))
+                (integer
+                  (decimal)))))
+          (integer
+            (decimal)))))
     (integer
       (decimal))))
