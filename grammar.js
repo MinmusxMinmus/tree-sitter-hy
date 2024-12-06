@@ -400,6 +400,36 @@ module.exports = grammar({
                             )
                         )
                     )
+                ),
+                seq(
+                    optional(
+                        number.sign
+                    ),
+                    repeat(
+                        number.separator
+                    ),
+                    number.decimal_digit,
+                    repeat(
+                        choice(
+                            number.separator,
+                            number.decimal_digit
+                        )
+                    ),
+                    optional(
+                        seq(
+                            /[eE]/,
+                            optional(
+                                number.sign
+                            ),
+                            number.decimal_digit,
+                            repeat(
+                                choice(
+                                    number.separator,
+                                    number.decimal_digit
+                                )
+                            )
+                        )
+                    )
                 )
             )
         ),
