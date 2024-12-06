@@ -28,13 +28,14 @@ const boolean = {
 
 const none = 'None'
 
+const identifier = {
+    ellipsis: '...',
+    valid_character: /[^\s\(\)\[\]\{\}#.;:"'`~]/,
+}
+
 const rx = {
     shebang: /#![^\n]*/,
     comment: /;[^\n]*/,
-
-    // Symbol catch-all
-    symbol: /[^\s\(\)\[\]\{\}#.;:"'`~][^\s\(\)\[\]\{\}.#;"'`~]*/,
-    keyword: /:[^\s\(\)\[\]\{\}#.;"'`~]+/,
 
     // Strings
     string: /(?:\\(?:.|\s))|[^"\\]/,
@@ -210,15 +211,12 @@ module.exports = grammar({
 
         _form: $ => choice(
             $.reader_macro,
-            $._literal,
-            $.symbol,
-            $.keyword,
-            $._keywords_with_values,
+            $._identifier,
             $.list,
             $.set,
             $.dictionary,
-            $.quoted_expression,
             $.expression,
+            $.quoted_expression
         ),
 
         reader_macro: $ => choice(
@@ -233,8 +231,12 @@ module.exports = grammar({
 
         discard_prefix: $ => lt.discard_prefix,
 
-        _literal: $ => choice(
+        _identifier: $ => choice(
             $._number,
+            $.keyword,
+            $.dotted_identifier,
+            $.ellipsis,
+            $.symbol,
             $._string,
             $.boolean,
             $.none
@@ -472,61 +474,38 @@ module.exports = grammar({
             )
         ),
 
-        boolean: _ => token(
-            choice(
-                boolean.true,
-                boolean.false
+        keyword: _ => token(
+            seq(
+                ':',
+                repeat(
+                    identifier.valid_character
+                )
             )
         ),
 
-        none: _ => none,
-
-        expression: $ => seq(
-            /\(/,
-            repeat(
-                $._form
-            ),
-            /\)/
+        dotted_identifier: _ => token(
+            seq(
+                repeat(
+                    '.'
+                ),
+                repeat1(
+                    seq(
+                        optional(
+                            '.'
+                        ),
+                        identifier.valid_character
+                    )
+                )
+            )
         ),
 
-        quoted_expression: $ => seq(
-            lt.sh_quote,
-            $.expression
+        ellipsis: _ => symbol.ellipsis,
+
+        symbol: _ => token(
+            repeat1(
+                identifier.valid_character
+            )
         ),
-
-        list: $ => seq(
-            /\[/,
-            repeat(
-               $._form
-            ),
-            /]/
-        ),
-
-        set: $ => seq(
-            /#\{/,
-            repeat(
-                $._form
-            ),
-            /}/
-        ),
-
-        dictionary: $ => seq(
-            /\{/,
-            repeat(
-                $.dictionary_item
-            ),
-            /}/
-        ),
-
-        dictionary_item: $ => seq(
-            $._form,
-            $._form
-        ),
-
-        symbol: _ => rx.symbol,
-
-        keyword: _ => rx.keyword,
-
 
         _string: $ => choice(
             $.string,
@@ -606,5 +585,56 @@ module.exports = grammar({
                 /"/
             )
         ),
+
+        boolean: _ => token(
+            choice(
+                boolean.true,
+                boolean.false
+            )
+        ),
+
+        none: _ => none,
+
+        list: $ => seq(
+            /\[/,
+            repeat(
+               $._form
+            ),
+            /]/
+        ),
+
+        set: $ => seq(
+            /#\{/,
+            repeat(
+                $._form
+            ),
+            /}/
+        ),
+
+        dictionary: $ => seq(
+            /\{/,
+            repeat(
+                $.dictionary_item
+            ),
+            /}/
+        ),
+
+        dictionary_item: $ => seq(
+            $._form,
+            $._form
+        ),
+
+        expression: $ => seq(
+            /\(/,
+            repeat(
+                $._form
+            ),
+            /\)/
+        ),
+
+        quoted_expression: $ => seq(
+            lt.sh_quote,
+            $.expression
+        )
     }
 });
