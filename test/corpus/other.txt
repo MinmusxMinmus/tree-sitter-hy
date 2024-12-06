@@ -1,0 +1,108 @@
+=========
+Shebang 1
+=========
+
+#!/usr/bin/env bash -r
+
+---
+
+(program
+  (shebang))
+
+=========
+Shebang 2
+=========
+
+#!~/.local/bin/custom run
+
+---
+
+(program
+  (shebang))
+
+========
+Comments
+========
+
+#!/usr/bin/env hy
+; This is an example comment.
+; This is a different example comment.
+
+---
+
+(program
+  (shebang)
+  (comment)
+  (comment))
+
+==============
+Discard prefix
+==============
+
+#!/usr/bin/env hy
+#_ 10
+(1 #_ 2 3 4)
+#_ (1 2 3)
+(1 #_ (2 3) 4 5)
+(1 #_ (#_ (2 3 4) 5) 6)
+---
+
+(program
+  (shebang)
+  (discard
+    (discard_prefix)
+    discarded_form: (integer
+      (decimal)))
+  (expression
+    (integer
+      (decimal))
+    (discard
+      (discard_prefix)
+      discarded_form: (integer
+        (decimal)))
+    (integer
+      (decimal))
+    (integer
+      (decimal)))
+  (discard
+    (discard_prefix)
+    discarded_form: (expression
+      (integer
+        (decimal))
+      (integer
+        (decimal))
+      (integer
+        (decimal))))
+  (expression
+    (integer
+      (decimal))
+    (discard
+      (discard_prefix)
+      discarded_form: (expression
+        (integer
+          (decimal))
+        (integer
+          (decimal))))
+    (integer
+      (decimal))
+    (integer
+      (decimal)))
+  (expression
+    (integer
+      (decimal))
+    (discard
+      (discard_prefix)
+      discarded_form: (expression
+        (discard
+          (discard_prefix)
+          discarded_form: (expression
+            (integer
+              (decimal))
+            (integer
+              (decimal))
+            (integer
+              (decimal))))
+        (integer
+          (decimal))))
+    (integer
+      (decimal))))

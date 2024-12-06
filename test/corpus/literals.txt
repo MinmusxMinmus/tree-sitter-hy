@@ -1,0 +1,200 @@
+========
+Integers
+========
+
+-1
++1234567890
+1_000_00000
+14_00000000
+1_________0
+1__0______0
+0
+0_________0
+00000000000
+-0
++0
++_1
+-_0
++________99
+-____9____9
+
+0x0123456789abcdef
+0X0123456789ABCDEF
+0x01_23_45_67_89_0
+0Xf__E___d____C__0
+0x_______________f
+0X0
+0x_0
+
+0o01234567
+0O01234567
+0o01_23_45_67
+0O7__6___5__0
+0o__________7
+0O0
+0o_0
+
+0b01
+0B01
+0b0_1
+0B0__1___0____1
+0b____________1
+0B0
+0b_0
+
+---
+
+(program
+  (integer
+    (decimal))
+  (integer
+    (decimal))
+  (integer
+    (decimal))
+  (integer
+    (decimal))
+  (integer
+    (decimal))
+  (integer
+    (decimal))
+  (integer
+    (decimal))
+  (integer
+    (decimal))
+  (integer
+    (decimal))
+  (integer
+    (decimal))
+  (integer
+    (decimal))
+  (integer
+    (decimal))
+  (integer
+    (decimal))
+  (integer
+    (decimal))
+  (integer
+    (decimal))
+  (integer
+    (hexadecimal))
+  (integer
+    (hexadecimal))
+  (integer
+    (hexadecimal))
+  (integer
+    (hexadecimal))
+  (integer
+    (hexadecimal))
+  (integer
+    (hexadecimal))
+  (integer
+    (hexadecimal))
+  (integer
+    (octal))
+  (integer
+    (octal))
+  (integer
+    (octal))
+  (integer
+    (octal))
+  (integer
+    (octal))
+  (integer
+    (octal))
+  (integer
+    (octal))
+  (integer
+    (binary))
+  (integer
+    (binary))
+  (integer
+    (binary))
+  (integer
+    (binary))
+  (integer
+    (binary))
+  (integer
+    (binary))
+  (integer
+    (binary)))
+
+========
+Floating point
+========
+
+NaN
++NaN
+-NaN
+Inf
++Inf
+-Inf
+
++1.
+-1.
++.1
+-.1
++_,__,1.
+-,,,,,__,1,___,.
+0e0
++0e0
+-0e0
++,_,1e,_,1
+-1_,_e1_,_
+0e________1
+0____e____1
+0________e1
+
+.1e0
++_._1_e_1_
+-1.e1
+
+
+---
+
+(program
+  (float
+    (nan))
+  (float
+    (nan))
+  (float
+    (nan))
+  (float
+    (infinity))
+  (float
+    (infinity))
+  (float
+    (infinity))
+  (float
+    (numeric_float))
+  (float
+    (numeric_float))
+  (float
+    (numeric_float))
+  (float
+    (numeric_float))
+  (float
+    (numeric_float))
+  (float
+    (numeric_float))
+  (float
+    (numeric_float))
+  (float
+    (numeric_float))
+  (float
+    (numeric_float))
+  (float
+    (numeric_float))
+  (float
+    (numeric_float))
+  (float
+    (numeric_float))
+  (float
+    (numeric_float))
+  (float
+    (numeric_float))
+  (float
+    (numeric_float))
+  (float
+    (numeric_float))
+  (float
+    (numeric_float)))
