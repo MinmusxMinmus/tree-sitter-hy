@@ -499,7 +499,7 @@ module.exports = grammar({
             )
         ),
 
-        ellipsis: _ => symbol.ellipsis,
+        ellipsis: _ => identifier.ellipsis,
 
         symbol: _ => token(
             repeat1(
