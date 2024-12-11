@@ -212,6 +212,7 @@ module.exports = grammar({
         _form: $ => choice(
             $.reader_macro,
             $._identifier,
+            $._string_literal,
             $.list,
             $.set,
             $.dictionary,
@@ -237,7 +238,6 @@ module.exports = grammar({
             $.dotted_identifier,
             $.ellipsis,
             $.symbol,
-            $._string,
             $.boolean,
             $.none
         ),
@@ -516,7 +516,7 @@ module.exports = grammar({
             )
         ),
 
-        _string: $ => choice(
+        _string_literal: $ => choice(
             $.string,
             $.fstring,
             $.bstring,
