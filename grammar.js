@@ -577,46 +577,46 @@ module.exports = grammar({
 
         string: _ => token(
             seq(
-                /"/,
+                '"',
                 repeat(
                     rx.string
                 ),
-                /"/
+                '"'
             )
         ),
 
         fstring: $ => seq(
-            /f"/,
+            'f"',
             repeat(
                 choice(
                     rx.fstring,
                     seq(
-                        /\{/,
+                        '{',
                         $._form,
-                        /\}/
+                        '}'
                     )
                 )
             ),
-            /"/
+            '"'
         ),
 
         bstring: _ => token(
             seq(
-                /b"/,
+                'b"',
                 repeat(
                     rx.string
                 ),
-                /"/
+                '"'
             )
         ),
 
         raw_string: _ => token(
             seq(
-                /r"/,
+                'r"',
                 repeat(
                     rx.string
                 ),
-                /"/
+                '"'
             )
         ),
 
@@ -626,13 +626,13 @@ module.exports = grammar({
                 choice(
                     rx.fstring,
                     seq(
-                        /\{/,
+                        '{',
                         $._form,
-                        /\}/
+                        '}'
                     )
                 )
             ),
-            /"/
+            '"'
         ),
 
         raw_bstring: _ => token(
@@ -641,7 +641,7 @@ module.exports = grammar({
                 repeat(
                     rx.string
                 ),
-                /"/
+                '"'
             )
         ),
 
@@ -665,9 +665,9 @@ module.exports = grammar({
                 choice(
                     $.bracket_fstring_contents,
                     seq(
-                        /\{/,
+                        '{',
                         $._form,
-                        /\}/
+                        '}'
                     )
                 )
             ),
@@ -686,27 +686,27 @@ module.exports = grammar({
         none: _ => none,
 
         list: $ => seq(
-            /\[/,
+            '[',
             repeat(
                $._form
             ),
-            /]/
+            ']'
         ),
 
         set: $ => seq(
-            /#\{/,
+            '#{',
             repeat(
                 $._form
             ),
-            /}/
+            '}'
         ),
 
         dictionary: $ => seq(
-            /\{/,
+            '{',
             repeat(
                 $.dictionary_item
             ),
-            /}/
+            '}'
         ),
 
         dictionary_item: $ => seq(
@@ -715,11 +715,11 @@ module.exports = grammar({
         ),
 
         expression: $ => seq(
-            /\(/,
+            '(',
             repeat(
                 $._form
             ),
-            /\)/
+            ')'
         ),
 
         quoted_expression: $ => seq(
