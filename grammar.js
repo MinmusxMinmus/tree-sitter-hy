@@ -468,7 +468,10 @@ module.exports = grammar({
         complex: _ => token(
             seq(
                 optional(
-                    number.sign,
+                    seq(
+                        number.sign,
+                        repeat(number.separator)
+                    )
                 ),
                 optional(
                     seq(
@@ -479,7 +482,10 @@ module.exports = grammar({
                                 number.decimal_digit
                             )
                         ),
-                        '[+-]'
+                        /[+-]/,
+                        repeat(
+                            number.separator
+                        )
                     )
                 ),
                 number.decimal_digit,
