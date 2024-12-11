@@ -509,16 +509,43 @@ module.exports = grammar({
         ),
 
         dotted_identifier: _ => token(
-            seq(
-                repeat(
-                    '.'
-                ),
-                repeat1(
-                    seq(
-                        optional(
-                            '.'
-                        ),
+            choice(
+                seq(
+                    repeat(
+                        '.'
+                    ),
+                    repeat1(
                         identifier.valid_character
+                    ),
+                    '.',
+                    repeat1(
+                        identifier.valid_character
+                    ),
+                    repeat(
+                        seq(
+                            '.',
+                            repeat1(
+                                identifier.valid_character
+                            )
+                        )
+                    )
+                ),
+                seq(
+                    repeat1(
+                        '.'
+                    ),
+                    repeat1(
+                        identifier.valid_character
+                    ),
+                    optional(
+                        repeat(
+                            seq(
+                                '.',
+                                repeat1(
+                                    identifier.valid_character
+                                )
+                            )
+                        )
                     )
                 )
             )
