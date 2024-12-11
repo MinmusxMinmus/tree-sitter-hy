@@ -188,6 +188,16 @@ const lt = {
 module.exports = grammar({
     name: "hy",
 
+    externals: $ => [
+        $.bracket_string_identifier,
+        $.bracket_string_contents,
+        $.bracket_string_ending_identifier,
+        $.bracket_fstring_identifier,
+        $.bracket_fstring_contents,
+        $.bracket_fstring_ending_identifier,
+        $._error_recovery
+    ],
+
     word: $ => $.symbol,
 
     rules: {
@@ -522,7 +532,9 @@ module.exports = grammar({
             $.bstring,
             $.raw_string,
             $.raw_fstring,
-            $.raw_bstring
+            $.raw_bstring,
+            $.bracket_string,
+            $.bracket_fstring
         ),
 
         string: _ => token(
@@ -593,6 +605,37 @@ module.exports = grammar({
                 ),
                 /"/
             )
+        ),
+
+        bracket_string: $ => seq(
+            '#[',
+            $.bracket_string_identifier,
+            '[',
+            optional(
+                $.bracket_string_contents
+            ),
+            ']',
+            $.bracket_string_ending_identifier,
+            ']'
+        ),
+
+        bracket_fstring: $ => seq(
+            '#[',
+            $.bracket_fstring_identifier,
+            '[',
+            repeat(
+                choice(
+                    $.bracket_fstring_contents,
+                    seq(
+                        /\{/,
+                        $._form,
+                        /\}/
+                    )
+                )
+            ),
+            ']',
+            $.bracket_fstring_ending_identifier,
+            ']'
         ),
 
         boolean: _ => token(
