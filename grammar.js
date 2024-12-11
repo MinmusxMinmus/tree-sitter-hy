@@ -30,7 +30,7 @@ const none = 'None'
 
 const identifier = {
     ellipsis: '...',
-    valid_character: /[^\s\(\)\[\]\{\}#.;:"'`~]/,
+    valid_character: /[^\s\(\)\[\]\{\}.;"'`~]/,
 }
 
 const rx = {
