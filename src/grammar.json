@@ -61,6 +61,10 @@
         },
         {
           "type": "SYMBOL",
+          "name": "_string_literal"
+        },
+        {
+          "type": "SYMBOL",
           "name": "list"
         },
         {
@@ -137,10 +141,6 @@
         {
           "type": "SYMBOL",
           "name": "symbol"
-        },
-        {
-          "type": "SYMBOL",
-          "name": "_string"
         },
         {
           "type": "SYMBOL",
@@ -483,6 +483,17 @@
               {
                 "type": "STRING",
                 "value": "."
+              },
+              {
+                "type": "REPEAT",
+                "content": {
+                  "type": "PATTERN",
+                  "value": "[,_]"
+                }
+              },
+              {
+                "type": "PATTERN",
+                "value": "[0-9]"
               },
               {
                 "type": "REPEAT",
@@ -890,14 +901,26 @@
     "symbol": {
       "type": "TOKEN",
       "content": {
-        "type": "REPEAT1",
-        "content": {
-          "type": "PATTERN",
-          "value": "[^\\s\\(\\)\\[\\]\\{\\}#.;:\"'`~]"
-        }
+        "type": "CHOICE",
+        "members": [
+          {
+            "type": "REPEAT1",
+            "content": {
+              "type": "PATTERN",
+              "value": "[^\\s\\(\\)\\[\\]\\{\\}#.;:\"'`~]"
+            }
+          },
+          {
+            "type": "REPEAT1",
+            "content": {
+              "type": "STRING",
+              "value": "."
+            }
+          }
+        ]
       }
     },
-    "_string": {
+    "_string_literal": {
       "type": "CHOICE",
       "members": [
         {
@@ -923,6 +946,14 @@
         {
           "type": "SYMBOL",
           "name": "raw_bstring"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "bracket_string"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "bracket_fstring"
         }
       ]
     },
@@ -1102,6 +1133,105 @@
         ]
       }
     },
+    "bracket_string": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "STRING",
+          "value": "#["
+        },
+        {
+          "type": "SYMBOL",
+          "name": "bracket_string_identifier"
+        },
+        {
+          "type": "STRING",
+          "value": "["
+        },
+        {
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "SYMBOL",
+              "name": "bracket_string_contents"
+            },
+            {
+              "type": "BLANK"
+            }
+          ]
+        },
+        {
+          "type": "STRING",
+          "value": "]"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "bracket_string_ending_identifier"
+        },
+        {
+          "type": "STRING",
+          "value": "]"
+        }
+      ]
+    },
+    "bracket_fstring": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "STRING",
+          "value": "#["
+        },
+        {
+          "type": "SYMBOL",
+          "name": "bracket_fstring_identifier"
+        },
+        {
+          "type": "STRING",
+          "value": "["
+        },
+        {
+          "type": "REPEAT",
+          "content": {
+            "type": "CHOICE",
+            "members": [
+              {
+                "type": "SYMBOL",
+                "name": "bracket_fstring_contents"
+              },
+              {
+                "type": "SEQ",
+                "members": [
+                  {
+                    "type": "PATTERN",
+                    "value": "\\{"
+                  },
+                  {
+                    "type": "SYMBOL",
+                    "name": "_form"
+                  },
+                  {
+                    "type": "PATTERN",
+                    "value": "\\}"
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "type": "STRING",
+          "value": "]"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "bracket_fstring_ending_identifier"
+        },
+        {
+          "type": "STRING",
+          "value": "]"
+        }
+      ]
+    },
     "boolean": {
       "type": "TOKEN",
       "content": {
@@ -1237,7 +1367,36 @@
   ],
   "conflicts": [],
   "precedences": [],
-  "externals": [],
+  "externals": [
+    {
+      "type": "SYMBOL",
+      "name": "bracket_string_identifier"
+    },
+    {
+      "type": "SYMBOL",
+      "name": "bracket_string_contents"
+    },
+    {
+      "type": "SYMBOL",
+      "name": "bracket_string_ending_identifier"
+    },
+    {
+      "type": "SYMBOL",
+      "name": "bracket_fstring_identifier"
+    },
+    {
+      "type": "SYMBOL",
+      "name": "bracket_fstring_contents"
+    },
+    {
+      "type": "SYMBOL",
+      "name": "bracket_fstring_ending_identifier"
+    },
+    {
+      "type": "SYMBOL",
+      "name": "_error_recovery"
+    }
+  ],
   "inline": [],
   "supertypes": []
 }

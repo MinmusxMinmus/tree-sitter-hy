@@ -1,5 +1,143 @@
 [
   {
+    "type": "bracket_fstring",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "boolean",
+          "named": true
+        },
+        {
+          "type": "bracket_fstring",
+          "named": true
+        },
+        {
+          "type": "bracket_fstring_contents",
+          "named": true
+        },
+        {
+          "type": "bracket_fstring_ending_identifier",
+          "named": true
+        },
+        {
+          "type": "bracket_fstring_identifier",
+          "named": true
+        },
+        {
+          "type": "bracket_string",
+          "named": true
+        },
+        {
+          "type": "bstring",
+          "named": true
+        },
+        {
+          "type": "complex",
+          "named": true
+        },
+        {
+          "type": "dictionary",
+          "named": true
+        },
+        {
+          "type": "dotted_identifier",
+          "named": true
+        },
+        {
+          "type": "ellipsis",
+          "named": true
+        },
+        {
+          "type": "expression",
+          "named": true
+        },
+        {
+          "type": "float",
+          "named": true
+        },
+        {
+          "type": "fstring",
+          "named": true
+        },
+        {
+          "type": "integer",
+          "named": true
+        },
+        {
+          "type": "keyword",
+          "named": true
+        },
+        {
+          "type": "list",
+          "named": true
+        },
+        {
+          "type": "none",
+          "named": true
+        },
+        {
+          "type": "quoted_expression",
+          "named": true
+        },
+        {
+          "type": "raw_bstring",
+          "named": true
+        },
+        {
+          "type": "raw_fstring",
+          "named": true
+        },
+        {
+          "type": "raw_string",
+          "named": true
+        },
+        {
+          "type": "reader_macro",
+          "named": true
+        },
+        {
+          "type": "set",
+          "named": true
+        },
+        {
+          "type": "string",
+          "named": true
+        },
+        {
+          "type": "symbol",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "bracket_string",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "bracket_string_contents",
+          "named": true
+        },
+        {
+          "type": "bracket_string_ending_identifier",
+          "named": true
+        },
+        {
+          "type": "bracket_string_identifier",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
     "type": "dictionary",
     "named": true,
     "fields": {},
@@ -24,6 +162,14 @@
       "types": [
         {
           "type": "boolean",
+          "named": true
+        },
+        {
+          "type": "bracket_fstring",
+          "named": true
+        },
+        {
+          "type": "bracket_string",
           "named": true
         },
         {
@@ -119,6 +265,14 @@
         "types": [
           {
             "type": "boolean",
+            "named": true
+          },
+          {
+            "type": "bracket_fstring",
+            "named": true
+          },
+          {
+            "type": "bracket_string",
             "named": true
           },
           {
@@ -225,6 +379,14 @@
       "types": [
         {
           "type": "boolean",
+          "named": true
+        },
+        {
+          "type": "bracket_fstring",
+          "named": true
+        },
+        {
+          "type": "bracket_string",
           "named": true
         },
         {
@@ -343,6 +505,14 @@
       "types": [
         {
           "type": "boolean",
+          "named": true
+        },
+        {
+          "type": "bracket_fstring",
+          "named": true
+        },
+        {
+          "type": "bracket_string",
           "named": true
         },
         {
@@ -468,6 +638,14 @@
           "named": true
         },
         {
+          "type": "bracket_fstring",
+          "named": true
+        },
+        {
+          "type": "bracket_string",
+          "named": true
+        },
+        {
           "type": "bstring",
           "named": true
         },
@@ -561,6 +739,14 @@
       "types": [
         {
           "type": "boolean",
+          "named": true
+        },
+        {
+          "type": "bracket_fstring",
+          "named": true
+        },
+        {
+          "type": "bracket_string",
           "named": true
         },
         {
@@ -682,6 +868,14 @@
           "named": true
         },
         {
+          "type": "bracket_fstring",
+          "named": true
+        },
+        {
+          "type": "bracket_string",
+          "named": true
+        },
+        {
           "type": "bstring",
           "named": true
         },
@@ -792,6 +986,14 @@
           "named": true
         },
         {
+          "type": "bracket_fstring",
+          "named": true
+        },
+        {
+          "type": "bracket_string",
+          "named": true
+        },
+        {
           "type": "bstring",
           "named": true
         },
@@ -875,7 +1077,19 @@
     }
   },
   {
+    "type": "#[",
+    "named": false
+  },
+  {
     "type": "'",
+    "named": false
+  },
+  {
+    "type": "[",
+    "named": false
+  },
+  {
+    "type": "]",
     "named": false
   },
   {
@@ -884,6 +1098,30 @@
   },
   {
     "type": "boolean",
+    "named": true
+  },
+  {
+    "type": "bracket_fstring_contents",
+    "named": true
+  },
+  {
+    "type": "bracket_fstring_ending_identifier",
+    "named": true
+  },
+  {
+    "type": "bracket_fstring_identifier",
+    "named": true
+  },
+  {
+    "type": "bracket_string_contents",
+    "named": true
+  },
+  {
+    "type": "bracket_string_ending_identifier",
+    "named": true
+  },
+  {
+    "type": "bracket_string_identifier",
     "named": true
   },
   {
