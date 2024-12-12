@@ -718,7 +718,7 @@ module.exports = grammar({
         ),
 
         quoted_expression: $ => seq(
-            lt.sh_quote,
+            '\'',
             $.expression
         )
     }
