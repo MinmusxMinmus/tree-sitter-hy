@@ -28,7 +28,7 @@ static inline bool in_bstr(Identifiers *identifiers) {
 }
 
 static inline bool is_bfs(String *str) {
-  return str->size == 1 && *array_front(str) == 'f' || (str->size > 2 && *array_get(str, 1) == '-');
+  return (str->size == 1 && *array_front(str) == 'f') || (str->size >= 2 && *array_get(str, 1) == '-');
 }
 
 static inline String *get_bs(Identifiers *identifiers) {
