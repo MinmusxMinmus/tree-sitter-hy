@@ -614,7 +614,7 @@ module.exports = grammar({
         ),
 
         raw_fstring: $ => seq(
-            /(rf)|(fr)"/,
+            /(?:(?:rf)|(?:fr))"/,
             repeat(
                 choice(
                     rx.fstring,
@@ -630,7 +630,7 @@ module.exports = grammar({
 
         raw_bstring: _ => token(
             seq(
-                /(rb)|(br)"/,
+                /(?:(?:rb)|(?:br))"/,
                 repeat(
                     rx.string
                 ),
