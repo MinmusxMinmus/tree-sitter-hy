@@ -232,18 +232,19 @@ unsigned tree_sitter_hy_external_scanner_serialize(
   Identifiers *ids = (Identifiers *)payload;
   uint32_t size = 0;
   uint32_t step = sizeof(uint32_t);
-  buffer[size] = ids->size;
+  uint32_t stepc = sizeof(int32_t);
+  *(uint32_t *)(&buffer[size]) = ids->size;
   size += step;
 
   for (uint32_t i = 0; i < ids->size;) {
     String *identifier = array_get(ids, i);
     i++;
-    buffer[size] = identifier->size;
+    *(uint32_t *)(&buffer[size]) = identifier->size;
     size += step;
     for (uint32_t j = 0; j < identifier->size;) {
-      buffer[size] = *array_get(identifier, j);
+      *(int32_t *)(&buffer[size]) = *array_get(identifier, j);
       j++;
-      size += step;
+      size += stepc;
     }
   }
 
@@ -262,15 +263,16 @@ void tree_sitter_hy_external_scanner_deserialize(
   clear_identifiers(ids);
   uint32_t count = 0;
   uint32_t step = sizeof(uint32_t);
-  uint32_t size = buffer[count];
+  uint32_t stepc = sizeof(int32_t);
+  uint32_t size = *(uint32_t *)(&buffer[count]);
   count += step;
   for (uint32_t idc = 0; idc < size; idc++) {
     String *str = ts_calloc(1, sizeof(Identifiers));
-    uint32_t id_size = buffer[count];
+    uint32_t id_size = *(uint32_t *)(&buffer[count]);
     count += step;
     for (uint32_t ids = 0; ids < id_size; ids++) {
-      int32_t ch = buffer[count];
-      count += step;
+      int32_t ch = *(int32_t *)(&buffer[count]);
+      count += stepc;
       array_push(str, ch);
     }
     array_push(ids, *str);
