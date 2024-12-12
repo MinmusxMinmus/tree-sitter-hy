@@ -35,10 +35,6 @@ static inline String *get_bs(Identifiers *identifiers) {
   return array_back(identifiers);
 }
 
-static inline char get_bsc(Identifiers *identifiers, uint32_t index) {
-  return *array_get(array_back(identifiers), index);
-}
-
 static inline void clear_identifiers(Identifiers *identifiers) {
   for (String str; identifiers->size > 0;) {
     str = array_pop(identifiers);
