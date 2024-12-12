@@ -118,9 +118,9 @@ Integers
   (integer
     (binary)))
 
-========
-Floating point
-========
+======================
+Floating point numbers
+======================
 
 NaN
 +NaN
@@ -198,3 +198,545 @@ Inf
     (numeric_float))
   (float
     (numeric_float)))
+
+===============
+Complex numbers
+===============
+
+0j
++0j
+-0j
+00000000j
+0_,_,_,_j
++1234567j
+-___1234j
++1234,_,j
+-_,123,_j
+123+4567j
++12+3456j
+-_1+2345j
++_1_+234j
+-_1_+_23j
++_1_+_2_j
+
+---
+
+(program
+  (complex)
+  (complex)
+  (complex)
+  (complex)
+  (complex)
+  (complex)
+  (complex)
+  (complex)
+  (complex)
+  (complex)
+  (complex)
+  (complex)
+  (complex)
+  (complex)
+  (complex))
+
+========
+Keywords
+========
+
+:foo
+:async
+:as
+:pragma
+:nrtsyhaei
+:
+::::::
+:123456
+:+/*&#$%
+:🦑
+
+---
+
+(program
+  (keyword)
+  (keyword)
+  (keyword)
+  (keyword)
+  (keyword)
+  (keyword)
+  (keyword)
+  (keyword)
+  (keyword)
+  (keyword))
+
+==================
+Dotted identifiers
+==================
+
+a.b
+_._
++6.28e
+dotted.identifier
+!!!!.!!!!
+a.b.c
+.a
+..a.b
+a.b.c.d.e.f.g.h.i
+🦑.🦑
+
+---
+
+(program
+  (dotted_identifier)
+  (dotted_identifier)
+  (dotted_identifier)
+  (dotted_identifier)
+  (dotted_identifier)
+  (dotted_identifier)
+  (dotted_identifier)
+  (dotted_identifier)
+  (dotted_identifier)
+  (dotted_identifier))
+
+=======
+Symbols
+=======
+
+hello
++++
+3fiddy
+$40
+just✈wrong
+🦑
+_
+.
+..
+.....
+..................
++1,000,000+2_000jj
+-1,000e
+
+---
+
+(program
+  (symbol)
+  (symbol)
+  (symbol)
+  (symbol)
+  (symbol)
+  (symbol)
+  (symbol)
+  (symbol)
+  (symbol)
+  (symbol)
+  (symbol)
+  (symbol)
+  (symbol))
+
+========
+Ellipsis
+========
+
+...
+
+---
+
+(program
+  (ellipsis))
+
+=======
+Strings
+=======
+
+""
+"Hello, world!"
+"Stole the next string from mypy"
+"Use special case logic to infer the return type of a specific named function/method.
+
+Caller must ensure that a plugin hook exists. There are two different cases:
+
+- If object_type is None, the caller must ensure that a function hook exists
+  for fullname.
+- If object_type is not None, the caller must ensure that a method hook exists
+  for fullname.
+
+Return the inferred return type."
+"Example escape characters: \" \n \t"
+"\\\"\\"
+"{(+ 40 2)}"
+
+---
+
+(program
+  (string)
+  (string)
+  (string)
+  (string)
+  (string)
+  (string)
+  (string))
+
+=========
+F-strings
+=========
+
+f""
+f"Hello, world!"
+f"Stole the next string from mypy"
+f"Use special case logic to infer the return type of a specific named function/method.
+
+Caller must ensure that a plugin hook exists. There are two different cases:
+
+- If object_type is None, the caller must ensure that a function hook exists
+  for fullname.
+- If object_type is not None, the caller must ensure that a method hook exists
+  for fullname.
+
+Return the inferred return type."
+f"Example escape characters: \" \n \t"
+f"\\\"\\"
+f"{{}}"
+f"}}}}}}"
+f"{{{{{{"
+f"{(+ 40 2)}"
+f"What you're seeing now is my \"normal state\""
+f"This is a {"Super Saiyan"}."
+f"And {"t"}{"h"}{"i"}{"s"}... {"t"}{"h"}{"i"}{"s"} is what is known as a {"Super Saiyan"} that
+has ascended past a {"Super Saiyan"}.  Or you could just call this a {"Super Saiyan"}{"2"}."
+f"*chuckles* Just wait.
+And {f"this... {f"is {f"to {f"go... {f"even {f"further {f"beyond!"}!"}!"}!"}!"}!"}!"}!"
+
+---
+
+(program
+  (fstring)
+  (fstring)
+  (fstring)
+  (fstring)
+  (fstring)
+  (fstring)
+  (fstring)
+  (fstring)
+  (fstring)
+  (fstring
+    (expression
+      (symbol)
+      (integer
+        (decimal))
+      (integer
+        (decimal))))
+  (fstring)
+  (fstring
+    (string))
+  (fstring
+    (string)
+    (string)
+    (string)
+    (string)
+    (string)
+    (string)
+    (string)
+    (string)
+    (string)
+    (string)
+    (string)
+    (string))
+  (fstring
+    (fstring
+      (fstring
+        (fstring
+          (fstring
+            (fstring
+              (fstring
+                (fstring)))))))))
+
+=========
+B-strings
+=========
+
+b""
+b"Hello, world!"
+b"Stole the next string from mypy"
+b"Use special case logic to infer the return type of a specific named function/method.
+
+Caller must ensure that a plugin hook exists. There are two different cases:
+
+- If object_type is None, the caller must ensure that a function hook exists
+  for fullname.
+- If object_type is not None, the caller must ensure that a method hook exists
+  for fullname.
+
+Return the inferred return type."
+b"Example escape characters: \" \n \t"
+b"\\\"\\"
+b"{(+ 40 2)}"
+
+---
+
+(program
+  (bstring)
+  (bstring)
+  (bstring)
+  (bstring)
+  (bstring)
+  (bstring)
+  (bstring))
+
+===========
+Raw strings
+===========
+
+r""
+r"Hello, world!"
+r"Stole the next string from mypy"
+r"Use special case logic to infer the return type of a specific named function/method.
+
+Caller must ensure that a plugin hook exists. There are two different cases:
+
+- If object_type is None, the caller must ensure that a function hook exists
+  for fullname.
+- If object_type is not None, the caller must ensure that a method hook exists
+  for fullname.
+
+Return the inferred return type."
+r"Example escape characters: \" \n \t"
+r"\\\"\\"
+r"{(+ 40 2)}"
+rb""
+br"Hello, world!"
+rb"Stole the next string from mypy"
+br"Use special case logic to infer the return type of a specific named function/method.
+
+Caller must ensure that a plugin hook exists. There are two different cases:
+
+- If object_type is None, the caller must ensure that a function hook exists
+  for fullname.
+- If object_type is not None, the caller must ensure that a method hook exists
+  for fullname.
+
+Return the inferred return type."
+rb"Example escape characters: \" \n \t"
+br"\\\"\\"
+rf"{{}}"
+fr"}}}}}}"
+rf"{{{{{{"
+fr"{(+ 40 2)}"
+rf"What you're seeing now is my \"normal state\""
+fr"This is a {r"Super Saiyan"}."
+rf"And {r"t"}{r"h"}{r"i"}{r"s"}... {r"t"}{r"h"}{r"i"}{r"s"} is what is known as a {r"Super Saiyan"} that
+has ascended past a {r"Super Saiyan"}.  Or you could just call this a {r"Super Saiyan"}{r"2"}."
+fr"*chuckles* Just wait.
+And {rf"this... {fr"is {rf"to {fr"go... {rf"even {fr"further {rf"beyond!"}!"}!"}!"}!"}!"}!"}!"
+
+---
+
+(program
+  (raw_string)
+  (raw_string)
+  (raw_string)
+  (raw_string)
+  (raw_string)
+  (raw_string)
+  (raw_string)
+  (raw_bstring)
+  (raw_bstring)
+  (raw_bstring)
+  (raw_bstring)
+  (raw_bstring)
+  (raw_bstring)
+  (raw_fstring)
+  (raw_fstring)
+  (raw_fstring)
+  (raw_fstring
+    (expression
+      (symbol)
+      (integer
+        (decimal))
+      (integer
+        (decimal))))
+  (raw_fstring)
+  (raw_fstring
+    (raw_string))
+  (raw_fstring
+    (raw_string)
+    (raw_string)
+    (raw_string)
+    (raw_string)
+    (raw_string)
+    (raw_string)
+    (raw_string)
+    (raw_string)
+    (raw_string)
+    (raw_string)
+    (raw_string)
+    (raw_string))
+  (raw_fstring
+    (raw_fstring
+      (raw_fstring
+        (raw_fstring
+          (raw_fstring
+            (raw_fstring
+              (raw_fstring
+                (raw_fstring)))))))))
+
+===============
+Bracket strings
+===============
+
+#[[]]
+#[[Hello, world!]]
+#[[/]]
+#[[You can write anything here, like "badly formatted strings\",
+go anywhere you want, so long as you don't put ] and ] together.]]
+#[END[You can even put ] and ] together like this ]], so long as
+you use a different identifier, like "END". Naturally, that'll
+only parse if it's between ].  So what you'll then have to avoid
+is to put ]END and ] together!  One interesting result of this is
+that you can now write example bracket strings inside the bracket
+string: #[[This is an example bracket string]].]END]
+#[[[[[[[[]]
+#[[{(+ 40 2)}]]
+#[Anything works as an identifier, so long as it doesn't contain brackets.[
+  Anything works as an identifier, so long as it doesn't contain brackets.
+ ]Anything works as an identifier, so long as it doesn't contain brackets.]
+#[🦑[Here's one way to ensure basically anything you type here works]🦑]
+
+---
+
+(program
+  (bracket_string
+    (bracket_string_identifier)
+    (bracket_string_contents)
+    (bracket_string_ending_identifier))
+  (bracket_string
+    (bracket_string_identifier)
+    (bracket_string_contents)
+    (bracket_string_ending_identifier))
+  (bracket_string
+    (bracket_string_identifier)
+    (bracket_string_contents)
+    (bracket_string_ending_identifier))
+  (bracket_string
+    (bracket_string_identifier)
+    (bracket_string_contents)
+    (bracket_string_ending_identifier))
+  (bracket_string
+    (bracket_string_identifier)
+    (bracket_string_contents)
+    (bracket_string_ending_identifier))
+  (bracket_string
+    (bracket_string_identifier)
+    (bracket_string_contents)
+    (bracket_string_ending_identifier))
+  (bracket_string
+    (bracket_string_identifier)
+    (bracket_string_contents)
+    (bracket_string_ending_identifier))
+  (bracket_string
+    (bracket_string_identifier)
+    (bracket_string_contents)
+    (bracket_string_ending_identifier))
+  (bracket_string
+    (bracket_string_identifier)
+    (bracket_string_contents)
+    (bracket_string_ending_identifier)))
+
+=================
+Bracket f-strings
+=================
+
+#[f[]f]
+#[f[Identifiers that are either "f" or start with "f-" make bracket f-strings.]f]
+#[f-[/]f-]
+#[f[[[[[[[]]]]]]]f]
+#[f[{(+ 40 2)}]f]
+#[f-Anything works as an identifier, so long as it doesn't contain brackets.[
+  f-Anything works as an identifier, so long as it doesn't contain brackets.
+ ]f-Anything works as an identifier, so long as it doesn't contain brackets.]
+#[f-🦑[Here's one way to ensure basically anything you type here works]f-🦑]
+#[f-a[And {#[f-b[of course, {#[f-c[this still works]f-c]} as you'd]f-b]} imagine.]f-a]
+#[f[In fact, {#[f[it doesn't really matter {#[f[if you reuse the identifier!]f]}]f]}]f]
+
+---
+
+(program
+  (bracket_fstring
+    (bracket_fstring_identifier)
+    (bracket_fstring_ending_identifier))
+  (bracket_fstring
+    (bracket_fstring_identifier)
+    (bracket_fstring_contents)
+    (bracket_fstring_ending_identifier))
+  (bracket_fstring
+    (bracket_fstring_identifier)
+    (bracket_fstring_contents)
+    (bracket_fstring_ending_identifier))
+  (bracket_fstring
+    (bracket_fstring_identifier)
+    (bracket_fstring_contents)
+    (bracket_fstring_ending_identifier))
+  (bracket_fstring
+    (bracket_fstring_identifier)
+    (expression
+      (symbol)
+      (integer
+        (decimal))
+      (integer
+        (decimal)))
+    (bracket_fstring_ending_identifier))
+  (bracket_fstring
+    (bracket_fstring_identifier)
+    (bracket_fstring_contents)
+    (bracket_fstring_ending_identifier))
+  (bracket_fstring
+    (bracket_fstring_identifier)
+    (bracket_fstring_contents)
+    (bracket_fstring_ending_identifier))
+  (bracket_fstring
+    (bracket_fstring_identifier)
+    (bracket_fstring_contents)
+    (bracket_fstring
+      (bracket_fstring_identifier)
+      (bracket_fstring_contents)
+      (bracket_fstring
+        (bracket_fstring_identifier)
+        (bracket_fstring_contents)
+        (bracket_fstring_ending_identifier))
+      (bracket_fstring_contents)
+      (bracket_fstring_ending_identifier))
+    (bracket_fstring_contents)
+    (bracket_fstring_ending_identifier))
+  (bracket_fstring
+    (bracket_fstring_identifier)
+    (bracket_fstring_contents)
+    (bracket_fstring
+      (bracket_fstring_identifier)
+      (bracket_fstring_contents)
+      (bracket_fstring
+        (bracket_fstring_identifier)
+        (bracket_fstring_contents)
+        (bracket_fstring_ending_identifier))
+      (bracket_fstring_ending_identifier))
+    (bracket_fstring_ending_identifier)))
+
+========
+Booleans
+========
+
+True
+False
+
+---
+
+(program
+  (boolean)
+  (boolean))
+
+====
+None
+====
+
+None
+
+---
+
+(program
+  (none))
