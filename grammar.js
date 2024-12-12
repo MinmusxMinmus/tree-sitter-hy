@@ -21,13 +21,6 @@ const number = {
     infinity: 'Inf',
 }
 
-const boolean = {
-    true: 'True',
-    false: 'False'
-}
-
-const none = 'None'
-
 const identifier = {
     ellipsis: '...',
     valid_character: /[^\s\(\)\[\]\{\}.;"'`~]/,
@@ -248,7 +241,7 @@ module.exports = grammar({
             $.dotted_identifier,
             $.ellipsis,
             $.symbol,
-            $.boolean,
+            $._boolean,
             $.none
         ),
 
@@ -676,14 +669,16 @@ module.exports = grammar({
             ']'
         ),
 
-        boolean: _ => token(
-            choice(
-                boolean.true,
-                boolean.false
-            )
+        _boolean: $ => choice(
+            $.true,
+            $.false
         ),
 
-        none: _ => none,
+        true: _ => 'True',
+
+        false: _ => 'False',
+
+        none: _ => 'None',
 
         list: $ => seq(
             '[',
