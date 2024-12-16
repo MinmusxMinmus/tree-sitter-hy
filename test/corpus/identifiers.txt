@@ -727,8 +727,8 @@ False
 ---
 
 (program
-  (boolean)
-  (boolean))
+  (true)
+  (false))
 
 ====
 None
