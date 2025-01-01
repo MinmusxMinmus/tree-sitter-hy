@@ -1,7 +1,6 @@
 =========
 Shebang 1
 =========
-
 #!/usr/bin/env bash -r
 
 ---
@@ -12,7 +11,6 @@ Shebang 1
 =========
 Shebang 2
 =========
-
 #!~/.local/bin/custom run
 
 ---
