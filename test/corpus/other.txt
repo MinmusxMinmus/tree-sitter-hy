@@ -40,6 +40,7 @@ Discard prefix
 #_ (1 2 3)
 (1 #_ (2 3) 4 5)
 (1 #_ (#_ (2 3 4) 5) 6)
+#_ #_ #_ 1 2 3
 ---
 
 (program
@@ -105,4 +106,17 @@ Discard prefix
           (integer
             (decimal)))))
     (integer
-      (decimal))))
+      (decimal)))
+  (reader_macro
+    (discard
+      (discard_prefix)
+      (discard
+        (discard_prefix)
+        (discard
+          (discard_prefix)
+          discarded_form: (integer
+            (decimal)))
+         discarded_form: (integer
+           (decimal)))
+       discarded_form: (integer
+         (decimal)))))
