@@ -232,7 +232,10 @@ module.exports = grammar({
             $.set,
             $.dictionary,
             $.expression,
-            $.quoted_form
+            $.quoted_form,
+            $.quasiquoted_form,
+            $.unquoted_form,
+            $.unquote_spliced_form
         ),
 
         reader_macro: $ => choice(
@@ -779,6 +782,57 @@ module.exports = grammar({
 
         quoted_form: $ => seq(
             '\'',
+            repeat(
+                whitespace
+            ),
+            repeat(
+                prec(
+                    1,
+                    choice(
+                        whitespace,
+                        $.discard
+                    )
+                )
+            ),
+            $._form
+        ),
+
+        quasiquoted_form: $ => seq(
+            '`',
+            repeat(
+                whitespace
+            ),
+            repeat(
+                prec(
+                    1,
+                    choice(
+                        whitespace,
+                        $.discard
+                    )
+                )
+            ),
+            $._form
+        ),
+
+        unquoted_form: $ => seq(
+            '~',
+            repeat(
+                whitespace
+            ),
+            repeat(
+                prec(
+                    1,
+                    choice(
+                        whitespace,
+                        $.discard
+                    )
+                )
+            ),
+            $._form
+        ),
+
+        unquote_spliced_form: $ => seq(
+            '~@',
             repeat(
                 whitespace
             ),
