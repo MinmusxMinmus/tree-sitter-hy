@@ -241,7 +241,20 @@ module.exports = grammar({
 
         discard: $ => seq(
             $.discard_prefix,
-            /\s+/,
+            repeat(
+                whitespace
+            ),
+            repeat(
+                prec(
+                    1,
+                    seq(
+                        $.discard,
+                        repeat(
+                            whitespace
+                        )
+                    )
+                )
+            ),
             field("discarded_form", $._form)
         ),
 
@@ -768,6 +781,15 @@ module.exports = grammar({
             '\'',
             repeat(
                 whitespace
+            ),
+            repeat(
+                prec(
+                    1,
+                    choice(
+                        whitespace,
+                        $.discard
+                    )
+                )
             ),
             $._form
         )
