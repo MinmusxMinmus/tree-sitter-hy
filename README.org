@@ -80,7 +80,7 @@ In no particular order:
 
   - ~setv~, ~setx~, ~global~, ~nonlocal~, ~del~, ~annotate~, ~deftype~.
 
-  - ~.~., ~unpack-iterable~, ~unpack-mapping~.
+  - ~.~, ~unpack-iterable~, ~unpack-mapping~.
 
   - ~if~, ~else~, ~when~, ~cond~, ~unless~, ~while~, ~break~, ~continue~.
 
@@ -102,7 +102,7 @@ In no particular order:
 
   The reason I'm not sure I want to do this is that all these macros are
   overridable by the user if they feel like it.  It's reasonable to make some
-  assumptions about very common macros like ~import~, but for something that
-  like ~unless~ (which requires explicit importing) it could be too fragile, and
+  assumptions about very common macros like ~import~, but for something like
+  ~unless~ (which requires explicit importing) it could be too fragile, and
   overall it might be a better idea to let users of the parser choose what they
   give special treatment to.
