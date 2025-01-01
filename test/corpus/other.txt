@@ -22,14 +22,12 @@ Shebang 2
 Comments
 ========
 
-#!/usr/bin/env hy
 ; This is an example comment.
 ; This is a different example comment.
 
 ---
 
 (program
-  (shebang)
   (comment)
   (comment))
 
@@ -37,7 +35,6 @@ Comments
 Discard prefix
 ==============
 
-#!/usr/bin/env hy
 #_ 10
 (1 #_ 2 3 4)
 #_ (1 2 3)
@@ -46,7 +43,6 @@ Discard prefix
 ---
 
 (program
-  (shebang)
   (reader_macro
     (discard
       (discard_prefix)
