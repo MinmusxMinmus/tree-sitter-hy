@@ -19,8 +19,90 @@ grasp of the basics.  My eventual goal is to use this grammar as a building
 block for further improvements to my Hy development environment (I plan on
 making my own Hy language server, also for learning purposes).
 
+* Features
+
+In no particular order:
+
+- Numeric literals (hexadecimal, octal, decimal, binary, floating point,
+  complex).
+
+- Exact literals (=NaN=, =Inf=, =...=, =True=, =False=, =None=).
+
+- Shebang.
+
+- Symbols and keywords.
+
+- Dotted identifiers.
+
+- Strings, raw strings and byte strings (and any combination).
+
+- f-strings (with support for combination with raw strings/byte strings, and
+  recursive strings of any type).
+
+- Bracket strings (with support for arbitrary delimiters, bracket f-strings, and
+  recursive strings of any type).
+
+- Lists, sets, dictionaries, and S-expressions.
+
+- Quoted, quasiquoted, unquoted, and unquote-spliced forms.
+
+- Discard prefixes (with support for recursive discard prefixes, as well as
+  presence of discard prefixes in strange spots such as between a quote and a
+  form).
+
 * Contributing
 
 I'm not looking for anything in particular.  Since this is partly a learning
 project I would like to implement most of it myself, but obviously any and all
 contributions are welcome.
+
+* Pending
+
+In no particular order:
+
+- Better bracket string error recovery.
+
+- More field names.
+
+- Comprehensive test suite.
+
+- Support for =#^=.
+
+- Support for =#*=.
+
+- Support for =#**=.
+
+- Potentially adding better, more descriptive nodes for:
+
+  - ~do~, ~do-mac~, ~eval-and-compile~, ~eval-when-compile~, ~py~, ~pys~, ~pragma~.
+
+  - ~quote~, ~quasiquote~, ~unquote~, ~unquote-splice~.
+
+  - ~setv~, ~setx~, ~global~, ~nonlocal~, ~del~, ~annotate~, ~deftype~.
+
+  - ~.~., ~unpack-iterable~, ~unpack-mapping~.
+
+  - ~if~, ~else~, ~when~, ~cond~, ~unless~, ~while~, ~break~, ~continue~.
+
+  - ~for~, ~lfor~, ~dfor~, ~gfor~, ~sfor~.
+
+  - ~with~, ~match~.
+
+  - ~raise~, ~try~, ~except~, ~except*~, ~finally~.
+
+  - ~defn~, ~fn~, ~return~, ~yield~, ~await~.
+
+  - ~defmacro~, ~defreader~, ~get-macro~, ~local-macros~.
+
+  - ~defclass~.
+
+  - ~import~, ~require~, ~export~.
+
+  - ~chainc~, ~assert~.
+
+  The reason I'm not sure I want to do this is that all these macros are
+  overridable by the user if they feel like it.  It's reasonable to make some
+  assumptions about very common macros like ~import~, but for something that
+  like ~unless~ (which requires explicit importing) it could be too fragile, and
+  overall it might be a better idea to let users of the parser choose what they
+  give special treatment to.
