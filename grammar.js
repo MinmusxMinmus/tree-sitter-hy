@@ -232,7 +232,7 @@ module.exports = grammar({
             $.set,
             $.dictionary,
             $.expression,
-            $.quoted_expression
+            $.quoted_form
         ),
 
         reader_macro: $ => choice(
@@ -764,9 +764,12 @@ module.exports = grammar({
             ')'
         ),
 
-        quoted_expression: $ => seq(
+        quoted_form: $ => seq(
             '\'',
-            $.expression
+            repeat(
+                whitespace
+            ),
+            $._form
         )
     }
 });
