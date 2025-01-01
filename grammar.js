@@ -7,6 +7,8 @@
 /// <reference types="tree-sitter-cli/dsl" />
 // @ts-check
 
+const whitespace = /\s/
+
 const number = {
     sign: /[+-]?[,_]*/,
     separator: /[,_]/,
@@ -181,6 +183,8 @@ const lt = {
 module.exports = grammar({
     name: "hy",
 
+    extras: _ => [],
+
     externals: $ => [
         $.bracket_string_identifier,
         $.bracket_string_contents,
@@ -199,7 +203,15 @@ module.exports = grammar({
                 $.shebang
             ),
             repeat(
-                $._item
+                whitespace
+            ),
+            repeat(
+                seq(
+                    $._item,
+                    repeat(
+                        whitespace
+                    )
+                )
             )
         ),
 
@@ -683,7 +695,15 @@ module.exports = grammar({
         list: $ => seq(
             '[',
             repeat(
-               $._form
+                whitespace
+            ),
+            repeat(
+                seq(
+                    $._form,
+                    repeat(
+                        whitespace
+                    )
+                )
             ),
             ']'
         ),
@@ -691,7 +711,15 @@ module.exports = grammar({
         set: $ => seq(
             '#{',
             repeat(
-                $._form
+                whitespace
+            ),
+            repeat(
+                seq(
+                    $._form,
+                    repeat(
+                        whitespace
+                    )
+                )
             ),
             '}'
         ),
@@ -699,20 +727,39 @@ module.exports = grammar({
         dictionary: $ => seq(
             '{',
             repeat(
-                $.dictionary_item
+                whitespace
+            ),
+            repeat(
+                seq(
+                    $.dictionary_item,
+                    repeat(
+                        whitespace
+                    )
+                )
             ),
             '}'
         ),
 
         dictionary_item: $ => seq(
             $._form,
+            repeat(
+                whitespace
+            ),
             $._form
         ),
 
         expression: $ => seq(
             '(',
             repeat(
-                $._form
+                whitespace
+            ),
+            repeat(
+                seq(
+                    $._form,
+                    repeat(
+                        whitespace
+                    )
+                )
             ),
             ')'
         ),
