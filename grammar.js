@@ -229,6 +229,7 @@ module.exports = grammar({
             $._identifier,
             $._string_literal,
             $.list,
+            $.tuple,
             $.set,
             $.dictionary,
             $.expression,
@@ -722,6 +723,22 @@ module.exports = grammar({
                 )
             ),
             ']'
+        ),
+
+        tuple: $ => seq(
+            '#(',
+            repeat(
+                whitespace
+            ),
+            repeat(
+                seq(
+                    $._form,
+                    repeat(
+                        whitespace
+                    )
+                )
+            ),
+            ')'
         ),
 
         set: $ => seq(
