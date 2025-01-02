@@ -1,0 +1,667 @@
+===============
+Quoted integers
+===============
+
+'-1
+'+1234567890
+'1_000_00000
+'0
+'0_________0
+'00000000000
+'+________99
+'-____9____9
+'0x0123456789abcdef
+'0o01234567
+'0b01
+
+
+---
+
+(program
+  (quoted_form
+    (integer
+      (decimal)))
+  (quoted_form
+    (integer
+      (decimal)))
+  (quoted_form
+    (integer
+      (decimal)))
+  (quoted_form
+    (integer
+      (decimal)))
+  (quoted_form
+    (integer
+      (decimal)))
+  (quoted_form
+    (integer
+      (decimal)))
+  (quoted_form
+    (integer
+      (decimal)))
+  (quoted_form
+    (integer
+      (decimal)))
+  (quoted_form
+    (integer
+      (hexadecimal)))
+  (quoted_form
+    (integer
+      (octal)))
+  (quoted_form
+    (integer
+      (binary))))
+
+=============================
+Quoted floating point numbers
+=============================
+
+'NaN
+'Inf
+'+1.
+'-.1
+'+_,__,1.
+'0e0
+'-0e0
+'+,_,1e,_,1
+'-1_,_e1_,_
+'0e________1
+'0____e____1
+'0________e1
+'.1e0
+'+_._1_e_1_
+'-1.e1
+
+---
+
+(program
+  (quoted_form
+    (float
+      (nan)))
+  (quoted_form
+    (float
+      (infinity)))
+  (quoted_form
+    (float
+      (numeric_float)))
+  (quoted_form
+    (float
+      (numeric_float)))
+  (quoted_form
+    (float
+      (numeric_float)))
+  (quoted_form
+    (float
+      (numeric_float)))
+  (quoted_form
+    (float
+      (numeric_float)))
+  (quoted_form
+    (float
+      (numeric_float)))
+  (quoted_form
+    (float
+      (numeric_float)))
+  (quoted_form
+    (float
+      (numeric_float)))
+  (quoted_form
+    (float
+      (numeric_float)))
+  (quoted_form
+    (float
+      (numeric_float)))
+  (quoted_form
+    (float
+      (numeric_float)))
+  (quoted_form
+    (float
+      (numeric_float)))
+  (quoted_form
+    (float
+      (numeric_float))))
+
+======================
+Quoted complex numbers
+======================
+
+'0j
+'+0j
+'-0j
+'00000000j
+'0_,_,_,_j
+'+1234567j
+'-___1234j
+'+1234,_,j
+'-_,123,_j
+'123+4567j
+'+12+3456j
+'-_1+2345j
+'+_1_+234j
+'-_1_+_23j
+'+_1_+_2_j
+
+---
+
+(program
+  (quoted_form
+    (complex))
+  (quoted_form
+    (complex))
+  (quoted_form
+    (complex))
+  (quoted_form
+    (complex))
+  (quoted_form
+    (complex))
+  (quoted_form
+    (complex))
+  (quoted_form
+    (complex))
+  (quoted_form
+    (complex))
+  (quoted_form
+    (complex))
+  (quoted_form
+    (complex))
+  (quoted_form
+    (complex))
+  (quoted_form
+    (complex))
+  (quoted_form
+    (complex))
+  (quoted_form
+    (complex))
+  (quoted_form
+    (complex)))
+
+===============
+Quoted keywords
+===============
+
+':foo
+':async
+':as
+':pragma
+':nrtsyhaei
+':
+'::::::
+':123456
+':+/*&#$%
+':🦑
+
+---
+
+(program
+  (quoted_form
+    (keyword))
+  (quoted_form
+    (keyword))
+  (quoted_form
+    (keyword))
+  (quoted_form
+    (keyword))
+  (quoted_form
+    (keyword))
+  (quoted_form
+    (keyword))
+  (quoted_form
+    (keyword))
+  (quoted_form
+    (keyword))
+  (quoted_form
+    (keyword))
+  (quoted_form
+    (keyword)))
+
+===============
+Quoted symbols
+===============
+
+'hello
+'+++
+'3fiddy
+'$40
+'just✈wrong
+'🦑
+'_
+'.
+'..
+'.....
+'..................
+'+1,000,000+2_000jj
+'-1,000e
+
+
+---
+
+(program
+  (quoted_form
+    (symbol))
+  (quoted_form
+    (symbol))
+  (quoted_form
+    (symbol))
+  (quoted_form
+    (symbol))
+  (quoted_form
+    (symbol))
+  (quoted_form
+    (symbol))
+  (quoted_form
+    (symbol))
+  (quoted_form
+    (symbol))
+  (quoted_form
+    (symbol))
+  (quoted_form
+    (symbol))
+  (quoted_form
+    (symbol))
+  (quoted_form
+    (symbol))
+  (quoted_form
+    (symbol)))
+
+==============
+Quoted symbols
+==============
+
+'hello
+'+++
+'3fiddy
+'$40
+'just✈wrong
+'🦑
+'_
+'.
+'..
+'.....
+'..................
+'+1,000,000+2_000jj
+'-1,000e
+
+---
+
+(program
+  (quoted_form
+    (symbol))
+  (quoted_form
+    (symbol))
+  (quoted_form
+    (symbol))
+  (quoted_form
+    (symbol))
+  (quoted_form
+    (symbol))
+  (quoted_form
+    (symbol))
+  (quoted_form
+    (symbol))
+  (quoted_form
+    (symbol))
+  (quoted_form
+    (symbol))
+  (quoted_form
+    (symbol))
+  (quoted_form
+    (symbol))
+  (quoted_form
+    (symbol))
+  (quoted_form
+    (symbol)))
+
+==================
+Quoted ellipsis
+==================
+
+'...
+
+---
+
+(program
+  (quoted_form
+    (ellipsis)))
+
+==============
+Quoted strings
+==============
+
+'""
+'"Hello, world!"
+'"Stole the next string from mypy"
+'"Use special case logic to infer the return type of a specific named function/method.
+
+Caller must ensure that a plugin hook exists. There are two different cases:
+
+- If object_type is None, the caller must ensure that a function hook exists
+  for fullname.
+- If object_type is not None, the caller must ensure that a method hook exists
+  for fullname.
+
+Return the inferred return type."
+'"Example escape characters: \" \n \t"
+'"\\\"\\"
+'"{(+ 40 2)}"
+'f"{{}}"
+f"}}}}}}"
+'f"{{{{{{"
+'f"{(+ 40 2)}"
+'f"What you're seeing now is my \"normal state\""
+'f"This is a {"Super Saiyan"}."
+'f"And {"t"}{"h"}{"i"}{"s"}... {"t"}{"h"}{"i"}{"s"} is what is known as a {"Super Saiyan"} that
+has ascended past a {"Super Saiyan"}.  Or you could just call this a {"Super Saiyan"}{"2"}."
+'f"*chuckles* Just wait.
+And {f"this... {f"is {f"to {f"go... {f"even {f"further {f"beyond!"}!"}!"}!"}!"}!"}!"}!"
+'b"Example escape characters: \" \n \t"
+'b"\\\"\\"
+'b"{(+ 40 2)}"
+'r"Example escape characters: \" \n \t"
+'r"\\\"\\"
+'r"{(+ 40 2)}"
+'rf"What you're seeing now is my \"normal state\""
+'fr"This is a {r"Super Saiyan"}."
+'rf"And {r"t"}{r"h"}{r"i"}{r"s"}... {r"t"}{r"h"}{r"i"}{r"s"} is what is known as a {r"Super Saiyan"} that
+has ascended past a {r"Super Saiyan"}.  Or you could just call this a {r"Super Saiyan"}{r"2"}."
+'fr"*chuckles* Just wait.
+And {rf"this... {fr"is {rf"to {fr"go... {rf"even {fr"further {rf"beyond!"}!"}!"}!"}!"}!"}!"}!"
+
+---
+
+(program
+  (quoted_form
+    (string))
+  (quoted_form
+    (string))
+  (quoted_form
+    (string))
+  (quoted_form
+    (string))
+  (quoted_form
+    (string))
+  (quoted_form
+    (string))
+  (quoted_form
+    (string))
+  (quoted_form
+    (fstring))
+  (fstring)
+  (quoted_form
+    (fstring))
+  (quoted_form
+    (fstring
+      (expression
+        (symbol)
+        (integer
+          (decimal))
+        (integer
+          (decimal)))))
+  (quoted_form
+    (fstring))
+  (quoted_form
+    (fstring
+      (string)))
+  (quoted_form
+    (fstring
+      (string)
+      (string)
+      (string)
+      (string)
+      (string)
+      (string)
+      (string)
+      (string)
+      (string)
+      (string)
+      (string)
+      (string)))
+  (quoted_form
+    (fstring
+      (fstring
+        (fstring
+          (fstring
+            (fstring
+              (fstring
+                (fstring
+                  (fstring)))))))))
+  (quoted_form
+    (bstring))
+  (quoted_form
+    (bstring))
+  (quoted_form
+    (bstring))
+  (quoted_form
+    (raw_string))
+  (quoted_form
+    (raw_string))
+  (quoted_form
+    (raw_string))
+  (quoted_form
+    (raw_fstring))
+  (quoted_form
+    (raw_fstring
+      (raw_string)))
+  (quoted_form
+    (raw_fstring
+      (raw_string)
+      (raw_string)
+      (raw_string)
+      (raw_string)
+      (raw_string)
+      (raw_string)
+      (raw_string)
+      (raw_string)
+      (raw_string)
+      (raw_string)
+      (raw_string)
+      (raw_string)))
+  (quoted_form
+    (raw_fstring
+      (raw_fstring
+        (raw_fstring
+          (raw_fstring
+            (raw_fstring
+              (raw_fstring
+                (raw_fstring
+                  (raw_fstring))))))))))
+
+======================
+Quoted bracket strings
+======================
+
+'#[[]]
+'#[[Hello, world!]]
+'#[[/]]
+'#[[You can write anything here, like "badly formatted strings\",
+go anywhere you want, so long as you don't put ] and ] together.]]
+#[END[You can even put ] and ] together like this ]], so long as
+you use a different identifier, like "END". Naturally, that'll
+only parse if it's between ].  So what you'll then have to avoid
+is to put ]END and ] together!  One interesting result of this is
+that you can now write example bracket strings inside the bracket
+string: #[[This is an example bracket string]].]END]
+'#[[[[[[[[]]
+'#[[{(+ 40 2)}]]
+'#[Anything works as an identifier, so long as it doesn't contain brackets.[
+  Anything works as an identifier, so long as it doesn't contain brackets.
+ ]Anything works as an identifier, so long as it doesn't contain brackets.]
+'#[🦑[Here's one way to ensure basically anything you type here works]🦑]
+'#[f-a[And {#[f-b[of course, {#[f-c[this still works]f-c]} as you'd]f-b]} imagine.]f-a]
+'#[f[In fact, {#[f[it doesn't really matter {#[f[if you reuse the identifier!]f]}]f]}]f]
+
+---
+
+(program
+  (quoted_form
+    (bracket_string
+      (bracket_string_identifier)
+      (bracket_string_contents)
+      (bracket_string_ending_identifier)))
+  (quoted_form
+    (bracket_string
+      (bracket_string_identifier)
+      (bracket_string_contents)
+      (bracket_string_ending_identifier)))
+  (quoted_form
+    (bracket_string
+      (bracket_string_identifier)
+      (bracket_string_contents)
+      (bracket_string_ending_identifier)))
+  (quoted_form
+    (bracket_string
+      (bracket_string_identifier)
+      (bracket_string_contents)
+      (bracket_string_ending_identifier)))
+  (bracket_string
+    (bracket_string_identifier)
+    (bracket_string_contents)
+    (bracket_string_ending_identifier))
+  (quoted_form
+    (bracket_string
+      (bracket_string_identifier)
+      (bracket_string_contents)
+      (bracket_string_ending_identifier)))
+  (quoted_form
+    (bracket_string
+      (bracket_string_identifier)
+      (bracket_string_contents)
+      (bracket_string_ending_identifier)))
+  (quoted_form
+    (bracket_string
+      (bracket_string_identifier)
+      (bracket_string_contents)
+      (bracket_string_ending_identifier)))
+  (quoted_form
+    (bracket_string
+      (bracket_string_identifier)
+      (bracket_string_contents)
+      (bracket_string_ending_identifier)))
+  (quoted_form
+    (bracket_fstring
+      (bracket_fstring_identifier)
+      (bracket_fstring_contents)
+      (bracket_fstring
+        (bracket_fstring_identifier)
+        (bracket_fstring_contents)
+        (bracket_fstring
+          (bracket_fstring_identifier)
+          (bracket_fstring_contents)
+          (bracket_fstring_ending_identifier))
+        (bracket_fstring_contents)
+        (bracket_fstring_ending_identifier))
+      (bracket_fstring_contents)
+      (bracket_fstring_ending_identifier)))
+  (quoted_form
+    (bracket_fstring
+      (bracket_fstring_identifier)
+      (bracket_fstring_contents)
+      (bracket_fstring
+        (bracket_fstring_identifier)
+        (bracket_fstring_contents)
+        (bracket_fstring
+          (bracket_fstring_identifier)
+          (bracket_fstring_contents)
+          (bracket_fstring_ending_identifier))
+        (bracket_fstring_ending_identifier))
+      (bracket_fstring_ending_identifier))))
+
+===============
+Quoted booleans
+===============
+
+'True
+'False
+
+---
+
+(program
+  (quoted_form
+    (true))
+  (quoted_form
+    (false)))
+
+===============
+Quoted None
+===============
+
+'None
+
+---
+
+(program
+  (quoted_form
+    (none)))
+
+=======================
+Quoted sequential forms
+=======================
+
+'[1 2 3 4 5]
+'#(1 2 3 4 5)
+'#{1 2 3 4 5}
+'{1 2 3 4}
+'(1 2 3 4 5)
+
+---
+
+(program
+  (quoted_form
+    (list
+      (integer
+        (decimal))
+      (integer
+        (decimal))
+      (integer
+        (decimal))
+      (integer
+        (decimal))
+      (integer
+        (decimal))))
+  (quoted_form
+    (tuple
+      (integer
+        (decimal))
+      (integer
+        (decimal))
+      (integer
+        (decimal))
+      (integer
+        (decimal))
+      (integer
+        (decimal))))
+  (quoted_form
+    (set
+      (integer
+        (decimal))
+      (integer
+        (decimal))
+      (integer
+        (decimal))
+      (integer
+        (decimal))
+      (integer
+        (decimal))))
+  (quoted_form
+    (dictionary
+      (dictionary_item
+        (integer
+          (decimal))
+        (integer
+          (decimal)))
+      (dictionary_item
+        (integer
+          (decimal))
+        (integer
+          (decimal)))))
+  (quoted_form
+    (expression
+      (integer
+        (decimal))
+      (integer
+        (decimal))
+      (integer
+        (decimal))
+      (integer
+        (decimal))
+      (integer
+        (decimal)))))

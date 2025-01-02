@@ -1,0 +1,192 @@
+=====
+Lists
+=====
+
+[1 2 3 4 5]
+[1 2 [2.3 2.6] 3]
+
+---
+
+(program
+  (list
+    (integer
+      (decimal))
+    (integer
+      (decimal))
+    (integer
+      (decimal))
+    (integer
+      (decimal))
+    (integer
+      (decimal)))
+  (list
+    (integer
+      (decimal))
+    (integer
+      (decimal))
+    (list
+      (float
+        (numeric_float))
+      (float
+        (numeric_float)))
+    (integer
+      (decimal))))
+
+======
+Tuples
+======
+
+#(1 2 3 4 5)
+#(1 2 #(2.3 2.6) 3)
+
+---
+
+(program
+  (tuple
+    (integer
+      (decimal))
+    (integer
+      (decimal))
+    (integer
+      (decimal))
+    (integer
+      (decimal))
+    (integer
+      (decimal)))
+  (tuple
+    (integer
+      (decimal))
+    (integer
+      (decimal))
+    (tuple
+      (float
+        (numeric_float))
+      (float
+        (numeric_float)))
+    (integer
+      (decimal))))
+
+====
+Sets
+====
+
+#{1 2 3 4 5}
+#{1 2 #{2.3 2.6} 3}
+
+---
+
+(program
+  (set
+    (integer
+      (decimal))
+    (integer
+      (decimal))
+    (integer
+      (decimal))
+    (integer
+      (decimal))
+    (integer
+      (decimal)))
+  (set
+    (integer
+      (decimal))
+    (integer
+      (decimal))
+    (set
+      (float
+        (numeric_float))
+      (float
+        (numeric_float)))
+    (integer
+      (decimal))))
+
+============
+Dictionaries
+============
+
+{1 2 3 4 5 6 7 8}
+{1 2 3 {1 3.3 2 3.6} 4 5}
+
+---
+
+(program
+  (dictionary
+    (dictionary_item
+      (integer
+        (decimal))
+      (integer
+        (decimal)))
+    (dictionary_item
+      (integer
+        (decimal))
+      (integer
+        (decimal)))
+    (dictionary_item
+      (integer
+        (decimal))
+      (integer
+        (decimal)))
+    (dictionary_item
+      (integer
+        (decimal))
+      (integer
+        (decimal))))
+  (dictionary
+    (dictionary_item
+      (integer
+        (decimal))
+      (integer
+        (decimal)))
+    (dictionary_item
+      (integer
+        (decimal))
+      (dictionary
+        (dictionary_item
+          (integer
+            (decimal))
+          (float
+            (numeric_float)))
+        (dictionary_item
+          (integer
+            (decimal))
+          (float
+            (numeric_float)))))
+     (dictionary_item
+      (integer
+        (decimal))
+      (integer
+        (decimal)))))
+
+===========
+Expressions
+===========
+
+(1 2 3 4 5)
+(1 2 (2.3 2.6) 3)
+
+---
+
+(program
+  (expression
+    (integer
+      (decimal))
+    (integer
+      (decimal))
+    (integer
+      (decimal))
+    (integer
+      (decimal))
+    (integer
+      (decimal)))
+  (expression
+    (integer
+      (decimal))
+    (integer
+      (decimal))
+    (expression
+      (float
+        (numeric_float))
+      (float
+        (numeric_float)))
+    (integer
+      (decimal))))
