@@ -236,7 +236,8 @@ module.exports = grammar({
             $.quoted_form,
             $.quasiquoted_form,
             $.unquoted_form,
-            $.unquote_spliced_form
+            $.unquote_spliced_form,
+            $.defn_form
         ),
 
         reader_macro: $ => choice(
@@ -880,6 +881,159 @@ module.exports = grammar({
                 whitespace
             ),
             field("symbol", $._symbol)
+        ),
+
+        defn_form: $ => seq(
+            '(',
+            repeat(
+                whitespace
+            ),
+            'defn',
+            repeat(
+                whitespace
+            ),
+            optional(
+                seq(
+                    $.async,
+                    repeat(
+                        whitespace
+                    )
+                )
+            ),
+            optional(
+                seq(
+                    $.decorators,
+                    repeat(
+                        whitespace
+                    )
+                )
+            ),
+            optional(
+                seq(
+                    $.type_parameters,
+                    repeat(
+                        whitespace
+                    )
+                )
+            ),
+            field('name', $._symbol),
+            repeat(
+                whitespace
+            ),
+            $.arguments,
+            repeat(
+                whitespace
+            ),
+            repeat(
+                seq(
+                    $._form,
+                    repeat(
+                        whitespace
+                    )
+                )
+            ),
+            ')'
+        ),
+
+        async: $ => ':async',
+
+        decorators: $ => seq(
+            '[',
+            repeat(
+                whitespace
+            ),
+            repeat(
+                seq(
+                    $.symbol,
+                    repeat(
+                        whitespace
+                    )
+                )
+            ),
+            ']'
+        ),
+
+        type_parameters: $ => seq(
+            ':tp',
+            repeat(
+                whitespace
+            ),
+            '[',
+            repeat(
+                whitespace
+            ),
+            repeat(
+                seq(
+                    $.symbol,
+                    repeat(
+                        whitespace
+                    )
+                )
+            ),
+            ']'
+        ),
+
+        arguments: $ => seq(
+            '[',
+            repeat(
+                whitespace
+            ),
+            repeat(
+                seq(
+                    $._argument,
+                    repeat(
+                        whitespace
+                    )
+                )
+            ),
+            ']'
+        ),
+
+        _argument: $ => choice(
+            $.argument,
+            $.default_argument,
+            $.positional_marker,
+            $.keyword_marker,
+            $.unpacked_iterable,
+            $.unpacked_mapping
+        ),
+
+        argument: $ => $._symbol,
+
+        default_argument: $ => seq(
+            '[',
+            repeat(
+                whitespace
+            ),
+            field("name", $._symbol),
+            repeat(
+                whitespace
+            ),
+            field("default", $._form),
+            repeat(
+                whitespace
+            ),
+            ']'
+        ),
+
+        positional_marker: $ => '/',
+
+        keyword_marker: $ => '*',
+
+        unpacked_iterable: $ => seq(
+            lt.sh_unpackiterable,
+            repeat(
+                whitespace
+            ),
+            $.symbol
+        ),
+
+        unpacked_mapping: $ => seq(
+            lt.sh_unpackmapping,
+            repeat(
+                whitespace
+            ),
+            $.symbol
         )
     }
 });

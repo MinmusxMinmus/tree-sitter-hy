@@ -42,6 +42,10 @@
             "named": true
           },
           {
+            "type": "defn_form",
+            "named": true
+          },
+          {
             "type": "dictionary",
             "named": true
           },
@@ -142,6 +146,60 @@
     }
   },
   {
+    "type": "argument",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": false,
+      "required": true,
+      "types": [
+        {
+          "type": "annotated_symbol",
+          "named": true
+        },
+        {
+          "type": "symbol",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "arguments",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": false,
+      "types": [
+        {
+          "type": "argument",
+          "named": true
+        },
+        {
+          "type": "default_argument",
+          "named": true
+        },
+        {
+          "type": "keyword_marker",
+          "named": true
+        },
+        {
+          "type": "positional_marker",
+          "named": true
+        },
+        {
+          "type": "unpacked_iterable",
+          "named": true
+        },
+        {
+          "type": "unpacked_mapping",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
     "type": "bracket_fstring",
     "named": true,
     "fields": {},
@@ -179,6 +237,10 @@
         },
         {
           "type": "complex",
+          "named": true
+        },
+        {
+          "type": "defn_form",
           "named": true
         },
         {
@@ -304,6 +366,329 @@
     }
   },
   {
+    "type": "decorators",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": false,
+      "types": [
+        {
+          "type": "symbol",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "default_argument",
+    "named": true,
+    "fields": {
+      "default": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "annotated_symbol",
+            "named": true
+          },
+          {
+            "type": "bracket_fstring",
+            "named": true
+          },
+          {
+            "type": "bracket_string",
+            "named": true
+          },
+          {
+            "type": "bstring",
+            "named": true
+          },
+          {
+            "type": "complex",
+            "named": true
+          },
+          {
+            "type": "defn_form",
+            "named": true
+          },
+          {
+            "type": "dictionary",
+            "named": true
+          },
+          {
+            "type": "dotted_identifier",
+            "named": true
+          },
+          {
+            "type": "ellipsis",
+            "named": true
+          },
+          {
+            "type": "expression",
+            "named": true
+          },
+          {
+            "type": "false",
+            "named": true
+          },
+          {
+            "type": "float",
+            "named": true
+          },
+          {
+            "type": "fstring",
+            "named": true
+          },
+          {
+            "type": "integer",
+            "named": true
+          },
+          {
+            "type": "keyword",
+            "named": true
+          },
+          {
+            "type": "list",
+            "named": true
+          },
+          {
+            "type": "none",
+            "named": true
+          },
+          {
+            "type": "quasiquoted_form",
+            "named": true
+          },
+          {
+            "type": "quoted_form",
+            "named": true
+          },
+          {
+            "type": "raw_bstring",
+            "named": true
+          },
+          {
+            "type": "raw_fstring",
+            "named": true
+          },
+          {
+            "type": "raw_string",
+            "named": true
+          },
+          {
+            "type": "reader_macro",
+            "named": true
+          },
+          {
+            "type": "set",
+            "named": true
+          },
+          {
+            "type": "string",
+            "named": true
+          },
+          {
+            "type": "symbol",
+            "named": true
+          },
+          {
+            "type": "true",
+            "named": true
+          },
+          {
+            "type": "tuple",
+            "named": true
+          },
+          {
+            "type": "unquote_spliced_form",
+            "named": true
+          },
+          {
+            "type": "unquoted_form",
+            "named": true
+          }
+        ]
+      },
+      "name": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "annotated_symbol",
+            "named": true
+          },
+          {
+            "type": "symbol",
+            "named": true
+          }
+        ]
+      }
+    }
+  },
+  {
+    "type": "defn_form",
+    "named": true,
+    "fields": {
+      "name": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "annotated_symbol",
+            "named": true
+          },
+          {
+            "type": "symbol",
+            "named": true
+          }
+        ]
+      }
+    },
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "annotated_symbol",
+          "named": true
+        },
+        {
+          "type": "arguments",
+          "named": true
+        },
+        {
+          "type": "async",
+          "named": true
+        },
+        {
+          "type": "bracket_fstring",
+          "named": true
+        },
+        {
+          "type": "bracket_string",
+          "named": true
+        },
+        {
+          "type": "bstring",
+          "named": true
+        },
+        {
+          "type": "complex",
+          "named": true
+        },
+        {
+          "type": "decorators",
+          "named": true
+        },
+        {
+          "type": "defn_form",
+          "named": true
+        },
+        {
+          "type": "dictionary",
+          "named": true
+        },
+        {
+          "type": "dotted_identifier",
+          "named": true
+        },
+        {
+          "type": "ellipsis",
+          "named": true
+        },
+        {
+          "type": "expression",
+          "named": true
+        },
+        {
+          "type": "false",
+          "named": true
+        },
+        {
+          "type": "float",
+          "named": true
+        },
+        {
+          "type": "fstring",
+          "named": true
+        },
+        {
+          "type": "integer",
+          "named": true
+        },
+        {
+          "type": "keyword",
+          "named": true
+        },
+        {
+          "type": "list",
+          "named": true
+        },
+        {
+          "type": "none",
+          "named": true
+        },
+        {
+          "type": "quasiquoted_form",
+          "named": true
+        },
+        {
+          "type": "quoted_form",
+          "named": true
+        },
+        {
+          "type": "raw_bstring",
+          "named": true
+        },
+        {
+          "type": "raw_fstring",
+          "named": true
+        },
+        {
+          "type": "raw_string",
+          "named": true
+        },
+        {
+          "type": "reader_macro",
+          "named": true
+        },
+        {
+          "type": "set",
+          "named": true
+        },
+        {
+          "type": "string",
+          "named": true
+        },
+        {
+          "type": "symbol",
+          "named": true
+        },
+        {
+          "type": "true",
+          "named": true
+        },
+        {
+          "type": "tuple",
+          "named": true
+        },
+        {
+          "type": "type_parameters",
+          "named": true
+        },
+        {
+          "type": "unquote_spliced_form",
+          "named": true
+        },
+        {
+          "type": "unquoted_form",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
     "type": "dictionary",
     "named": true,
     "fields": {},
@@ -344,6 +729,10 @@
         },
         {
           "type": "complex",
+          "named": true
+        },
+        {
+          "type": "defn_form",
           "named": true
         },
         {
@@ -471,6 +860,10 @@
           },
           {
             "type": "complex",
+            "named": true
+          },
+          {
+            "type": "defn_form",
             "named": true
           },
           {
@@ -613,6 +1006,10 @@
         },
         {
           "type": "complex",
+          "named": true
+        },
+        {
+          "type": "defn_form",
           "named": true
         },
         {
@@ -763,6 +1160,10 @@
         },
         {
           "type": "complex",
+          "named": true
+        },
+        {
+          "type": "defn_form",
           "named": true
         },
         {
@@ -920,6 +1321,10 @@
           "named": true
         },
         {
+          "type": "defn_form",
+          "named": true
+        },
+        {
           "type": "dictionary",
           "named": true
         },
@@ -1049,6 +1454,10 @@
         },
         {
           "type": "complex",
+          "named": true
+        },
+        {
+          "type": "defn_form",
           "named": true
         },
         {
@@ -1183,6 +1592,10 @@
           "named": true
         },
         {
+          "type": "defn_form",
+          "named": true
+        },
+        {
           "type": "dictionary",
           "named": true
         },
@@ -1314,6 +1727,10 @@
           "named": true
         },
         {
+          "type": "defn_form",
+          "named": true
+        },
+        {
           "type": "dictionary",
           "named": true
         },
@@ -1442,6 +1859,10 @@
         },
         {
           "type": "complex",
+          "named": true
+        },
+        {
+          "type": "defn_form",
           "named": true
         },
         {
@@ -1587,6 +2008,10 @@
           "named": true
         },
         {
+          "type": "defn_form",
+          "named": true
+        },
+        {
           "type": "dictionary",
           "named": true
         },
@@ -1714,6 +2139,10 @@
           "named": true
         },
         {
+          "type": "defn_form",
+          "named": true
+        },
+        {
           "type": "dictionary",
           "named": true
         },
@@ -1813,6 +2242,51 @@
     }
   },
   {
+    "type": "type_parameters",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": false,
+      "types": [
+        {
+          "type": "symbol",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "unpacked_iterable",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": false,
+      "required": true,
+      "types": [
+        {
+          "type": "symbol",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "unpacked_mapping",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": false,
+      "required": true,
+      "types": [
+        {
+          "type": "symbol",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
     "type": "unquote_spliced_form",
     "named": true,
     "fields": {},
@@ -1838,6 +2312,10 @@
         },
         {
           "type": "complex",
+          "named": true
+        },
+        {
+          "type": "defn_form",
           "named": true
         },
         {
@@ -1972,6 +2450,10 @@
           "named": true
         },
         {
+          "type": "defn_form",
+          "named": true
+        },
+        {
           "type": "dictionary",
           "named": true
         },
@@ -2083,6 +2565,14 @@
     "named": false
   },
   {
+    "type": "#*",
+    "named": false
+  },
+  {
+    "type": "#**",
+    "named": false
+  },
+  {
     "type": "#[",
     "named": false
   },
@@ -2107,6 +2597,10 @@
     "named": false
   },
   {
+    "type": ":tp",
+    "named": false
+  },
+  {
     "type": "[",
     "named": false
   },
@@ -2117,6 +2611,10 @@
   {
     "type": "`",
     "named": false
+  },
+  {
+    "type": "async",
+    "named": true
   },
   {
     "type": "binary",
@@ -2163,6 +2661,10 @@
     "named": true
   },
   {
+    "type": "defn",
+    "named": false
+  },
+  {
     "type": "discard_prefix",
     "named": true
   },
@@ -2195,6 +2697,10 @@
     "named": true
   },
   {
+    "type": "keyword_marker",
+    "named": true
+  },
+  {
     "type": "nan",
     "named": true
   },
@@ -2208,6 +2714,10 @@
   },
   {
     "type": "octal",
+    "named": true
+  },
+  {
+    "type": "positional_marker",
     "named": true
   },
   {

@@ -90,7 +90,7 @@ In no particular order:
 
   - ~raise~, ~try~, ~except~, ~except*~, ~finally~.
 
-  - ~defn~, ~fn~, ~return~, ~yield~, ~await~.
+  - ~fn~, ~return~, ~yield~, ~await~.
 
   - ~defmacro~, ~defreader~, ~get-macro~, ~local-macros~.
 

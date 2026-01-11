@@ -190,3 +190,63 @@ Expressions
         (numeric_float)))
     (integer
       (decimal))))
+
+====================
+Function definitions
+====================
+
+(defn f [] 42)
+
+(defn :async [decorator1 decorator2] :tp [T1 T2] #^ annotation name [params] …)
+
+(defn f [a / b [c 3] * d e #** kwargs] [a b c d e kwargs])
+
+---
+
+(program
+  (defn_form
+    (symbol)
+    (arguments)
+    (integer
+      (decimal)))
+  (defn_form
+    (async)
+    (decorators
+      (symbol)
+      (symbol))
+    (type_parameters
+      (symbol)
+      (symbol))
+    (annotated_symbol
+      (symbol)
+      (symbol))
+    (arguments
+      (argument
+        (symbol)))
+    (symbol))
+  (defn_form
+    (symbol)
+    (arguments
+      (argument
+        (symbol))
+      (positional_marker)
+      (argument
+        (symbol))
+      (default_argument
+        (symbol)
+        (integer
+          (decimal)))
+      (keyword_marker)
+      (argument
+        (symbol))
+      (argument
+        (symbol))
+      (unpacked_mapping
+        (symbol)))
+    (list
+      (symbol)
+      (symbol)
+      (symbol)
+      (symbol)
+      (symbol)
+      (symbol))))
