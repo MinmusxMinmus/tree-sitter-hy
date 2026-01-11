@@ -240,8 +240,7 @@ module.exports = grammar({
         ),
 
         reader_macro: $ => choice(
-            $.discard,
-            $.annotated_symbol
+            $.discard
         ),
 
         discard: $ => seq(
@@ -270,7 +269,7 @@ module.exports = grammar({
             $.keyword,
             $.dotted_identifier,
             $.ellipsis,
-            $.symbol,
+            $._symbol,
             $._boolean,
             $.none
         ),
@@ -576,6 +575,11 @@ module.exports = grammar({
 
         ellipsis: _ => identifier.ellipsis,
 
+        _symbol: $ => choice(
+            $.symbol,
+            $.annotated_symbol
+        ),
+
         symbol: _ => token(
             choice(
                 repeat1(
@@ -875,7 +879,7 @@ module.exports = grammar({
             repeat(
                 whitespace
             ),
-            field("symbol", $.symbol)
+            field("symbol", $._symbol)
         )
     }
 });

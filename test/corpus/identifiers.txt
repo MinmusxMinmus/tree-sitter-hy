@@ -752,30 +752,26 @@ Annotated symbols
 ---
 
 (program
-  (reader_macro
-    (annotated_symbol
+  (annotated_symbol
+    (symbol)
+    (symbol))
+  (annotated_symbol
+    (expression
       (symbol)
-      (symbol)))
-  (reader_macro
-    (annotated_symbol
-      (expression
-        (symbol)
-        (symbol))
-      (symbol)))
+      (symbol))
+    (symbol))
   (expression
     (symbol)
-    (reader_macro
-      (annotated_symbol
-        (symbol)
-        (symbol)))
+    (annotated_symbol
+      (symbol)
+      (symbol))
     (integer
       (decimal))
     (symbol)
     (integer
       (decimal))
-    (reader_macro
-      (annotated_symbol
-        (symbol)
-        (symbol)))
+    (annotated_symbol
+      (symbol)
+      (symbol))
     (integer
       (decimal))))
