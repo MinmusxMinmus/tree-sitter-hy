@@ -867,7 +867,7 @@ module.exports = grammar({
         ),
 
         annotated_symbol: $ => seq(
-            '#^',
+            sh_annotate,
             repeat(
                 whitespace
             ),
