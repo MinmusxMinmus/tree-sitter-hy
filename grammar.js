@@ -240,7 +240,8 @@ module.exports = grammar({
         ),
 
         reader_macro: $ => choice(
-            $.discard
+            $.discard,
+            $.annotated_symbol
         ),
 
         discard: $ => seq(
@@ -863,6 +864,18 @@ module.exports = grammar({
                 )
             ),
             $._form
+        ),
+
+        annotated_symbol: $ => seq(
+            '#^',
+            repeat(
+                whitespace
+            ),
+            field("type", $._form),
+            repeat(
+                whitespace
+            ),
+            field("symbol", $.symbol)
         )
     }
 });

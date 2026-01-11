@@ -66,7 +66,7 @@ In no particular order:
 
 - Comprehensive test suite.
 
-- Support for =#^=.
+- Full support for =#^=.
 
 - Support for =#*=.
 

@@ -740,3 +740,42 @@ None
 
 (program
   (none))
+
+=================
+Annotated symbols
+=================
+
+#^ int x
+#^(f x) y
+(setv  #^ int x 1  y 2  #^ str z 3)
+
+---
+
+(program
+  (reader_macro
+    (annotated_symbol
+      (symbol)
+      (symbol)))
+  (reader_macro
+    (annotated_symbol
+      (expression
+        (symbol)
+        (symbol))
+      (symbol)))
+  (expression
+    (symbol)
+    (reader_macro
+      (annotated_symbol
+        (symbol)
+        (symbol)))
+    (integer
+      (decimal))
+    (symbol)
+    (integer
+      (decimal))
+    (reader_macro
+      (annotated_symbol
+        (symbol)
+        (symbol)))
+    (integer
+      (decimal))))
