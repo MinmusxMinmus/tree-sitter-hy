@@ -21,29 +21,37 @@ typedef struct _ParseResult {
 
 typedef Array(int32_t) String;
 
-typedef Array(String) Identifiers;
+// Instead of storing full identifiers, we store their hashes
+typedef struct {
+  uint64_t hash;
+  bool is_fstring;
+} IdentifierHash;
 
-static inline bool in_bstr(Identifiers *identifiers) {
-  return identifiers->size > 0;
+typedef Array(IdentifierHash) IdentifierHashes;
+
+static inline bool in_bstr(IdentifierHashes *hashes) {
+  return hashes->size > 0;
 }
 
 static inline bool is_bfs(String *str) {
   return (str->size == 1 && *array_front(str) == 'f') || (str->size >= 2 && *array_get(str, 1) == '-');
 }
 
-static inline String *get_bs(Identifiers *identifiers) {
-  return array_back(identifiers);
-}
-
-static inline void clear_identifiers(Identifiers *identifiers) {
-  for (String str; identifiers->size > 0;) {
-    str = array_pop(identifiers);
-    array_delete(&str);
+// Simple FNV-1a hash function for strings
+static inline uint64_t hash_string(String *str) {
+  uint64_t hash = 14695981039346656037ULL; // FNV offset basis
+  for (uint32_t i = 0; i < str->size; i++) {
+    hash ^= (uint64_t)*array_get(str, i);
+    hash *= 1099511628211ULL; // FNV prime
   }
-  array_clear(identifiers);
+  return hash;
 }
 
-static ParseResult parse_identifier(TSLexer *lexer, Identifiers *identifiers) {
+static inline void clear_hashes(IdentifierHashes *hashes) {
+  array_clear(hashes);
+}
+
+static ParseResult parse_identifier(TSLexer *lexer, IdentifierHashes *hashes) {
   lexer->log(lexer, "Attempting to parse bracket string/f-string identifier");
   String str = array_new();
   for (;;) {
@@ -51,75 +59,70 @@ static ParseResult parse_identifier(TSLexer *lexer, Identifiers *identifiers) {
     if (lexer->eof(lexer)) {
       lexer->log(lexer, "Reached EOF while parsing bracket string/f-string identifier");
       lexer->mark_end(lexer);
+      array_delete(&str);
       return (ParseResult){ true, ERR };
     }
     if (lexer->lookahead == '[') {
       lexer->log(lexer, "Parsed bracket string/f-string identifier of length %d", str.size);
       lexer->mark_end(lexer);
-      array_push(identifiers, str);
-      return is_bfs(&str) ? (ParseResult){ true, BFSID }: (ParseResult){true, BSID};
+      
+      bool is_fstr = is_bfs(&str);
+      uint64_t hash = hash_string(&str);
+      IdentifierHash id_hash = { hash, is_fstr };
+      array_push(hashes, id_hash);
+      
+      array_delete(&str);
+      return is_fstr ? (ParseResult){ true, BFSID } : (ParseResult){ true, BSID };
     }
     array_push(&str, lexer->lookahead);
     lexer->advance(lexer, false);
   }
 }
 
-static ParseResult parse_ending_identifier(TSLexer *lexer, Identifiers *identifiers) {
+static ParseResult parse_ending_identifier(TSLexer *lexer, IdentifierHashes *hashes) {
   // If we aren't in a bracket string, something has gone terribly
   // wrong.
-  if (!in_bstr(identifiers)) {
+  if (!in_bstr(hashes)) {
     lexer->log(lexer, "Attempted to parse bracket string/f-string ending identifier while not inside a bracket string");
     return (ParseResult){ true, ERR };
   }
   lexer->log(lexer, "Attempting to parse bracket string/f-string ending identifier");
 
-  uint32_t idx = 0;
-  String *identifier = get_bs(identifiers);
+  String str = array_new();
   for (;;) {
     // EOF
     if (lexer->eof(lexer)) {
       lexer->log(lexer, "Reached EOF while parsing bracket string/f-string ending identifier");
       lexer->mark_end(lexer);
+      array_delete(&str);
       return (ParseResult){ true, ERR };
     }
 
-    lexer->log(lexer, "Parsing character '%c'", lexer->lookahead);
-
-    // ???
-    if (idx > identifier->size) {
-      lexer->log(lexer, "This should never happen");
-      lexer->mark_end(lexer);
-      return (ParseResult){ true, ERR };
-    }
-
-    // Identifier not fully parsed yet
-    if (idx < identifier->size) {
-      // Reading valid characters.
-      if (lexer->lookahead == *array_get(identifier, idx)) {
-        idx++;
-        lexer->log(lexer, "Character is valid");
-        lexer->advance(lexer, false);
-        continue;
-      }
-      // Not the happy path -> not the identifier.
-      lexer->log(lexer, "Character is not part of the expected bracket string/f-string ending identifier, aborting");
-      return (ParseResult){ false, ERR };
-    }
-
-    // Identifier fully parsed
-    if (idx == identifier->size) {
-      if (lexer->lookahead == ']') {
+    // Check if we've reached the closing bracket
+    if (lexer->lookahead == ']') {
+      lexer->log(lexer, "Found closing bracket, verifying identifier hash");
+      
+      // Compute hash of the parsed identifier
+      uint64_t parsed_hash = hash_string(&str);
+      IdentifierHash *expected = array_back(hashes);
+      
+      if (parsed_hash == expected->hash) {
         lexer->log(lexer, "Successfully parsed bracket string/f-string ending identifier");
-        return is_bfs(identifier) ? (ParseResult){ true, BFSEID } : (ParseResult){ true, BSEID };
+        array_delete(&str);
+        return expected->is_fstring ? (ParseResult){ true, BFSEID } : (ParseResult){ true, BSEID };
+      } else {
+        lexer->log(lexer, "Hash mismatch: expected %llu, got %llu", expected->hash, parsed_hash);
+        array_delete(&str);
+        return (ParseResult){ false, ERR };
       }
-      // Not the happy path -> not the identifier.
-      lexer->log(lexer, "Bracket string/f-string ending identifier parsed but no closing bracket followed, aborting");
-      return (ParseResult){ false, ERR };
     }
+    
+    array_push(&str, lexer->lookahead);
+    lexer->advance(lexer, false);
   }
 }
 
-static ParseResult parse_contents(TSLexer *lexer, Identifiers *identifiers) {
+static ParseResult parse_contents(TSLexer *lexer, IdentifierHashes *hashes) {
   lexer->log(lexer, "Attempting to parse bracket string contents");
   for (;;) {
     // EOF
@@ -133,20 +136,22 @@ static ParseResult parse_contents(TSLexer *lexer, Identifiers *identifiers) {
       lexer->log(lexer, "Found potential bracket string end, verifying");
       lexer->mark_end(lexer);
       lexer->advance(lexer, false);
-      ParseResult match = parse_ending_identifier(lexer, identifiers);
+      ParseResult match = parse_ending_identifier(lexer, hashes);
       // It was in fact the bracket string end (or an error token).
       if (match.success) {
         lexer->log(lexer, "Found bracket string end, wrapping up contents");
         return (ParseResult){ true, BSC };
       }
-      // It was not in fact the bracket string end.
+      // It was not in fact the bracket string end, continue parsing.
+      lexer->log(lexer, "Not the bracket string end, continuing");
+      continue;
     }
     // Continue parsing until we find a potential end.
     lexer->advance(lexer, false);
   }
 }
 
-static ParseResult parse_fstring_contents(TSLexer *lexer, Identifiers *identifiers) {
+static ParseResult parse_fstring_contents(TSLexer *lexer, IdentifierHashes *hashes) {
   lexer->log(lexer, "Attempting to parse bracket f-string contents");
   bool empty = true;
   for (;;) {
@@ -161,13 +166,16 @@ static ParseResult parse_fstring_contents(TSLexer *lexer, Identifiers *identifie
       lexer->log(lexer, "Found potential bracket f-string end, verifying");
       lexer->mark_end(lexer);
       lexer->advance(lexer, false);
-      ParseResult match = parse_ending_identifier(lexer, identifiers);
+      ParseResult match = parse_ending_identifier(lexer, hashes);
       // It was in fact the bracket string end (or an error token).
       if (match.success) {
         lexer->log(lexer, "Found bracket f-string end, wrapping up contents");
         return (ParseResult){ !empty, BFSC };
       }
-      // It was not in fact the bracket string end.
+      // It was not in fact the bracket string end, continue parsing.
+      lexer->log(lexer, "Not the bracket f-string end, continuing");
+      empty = false;
+      continue;
     }
 
     // Potential formatting.
@@ -210,38 +218,58 @@ static ParseResult parse_fstring_contents(TSLexer *lexer, Identifiers *identifie
 }
 
 void *tree_sitter_hy_external_scanner_create(void) {
-  Identifiers *ids = (Identifiers *)ts_calloc(1, sizeof(Identifiers));
-  array_init(ids);
-  return ids;
+  IdentifierHashes *hashes = (IdentifierHashes *)ts_calloc(1, sizeof(IdentifierHashes));
+  array_init(hashes);
+  return hashes;
 }
 
 void tree_sitter_hy_external_scanner_destroy(void *payload) {
-  Identifiers *ids = (Identifiers *)payload;
-  clear_identifiers(ids);
-  ts_free(ids);
+  IdentifierHashes *hashes = (IdentifierHashes *)payload;
+  clear_hashes(hashes);
+  ts_free(hashes);
 }
 
+/**
+ * Serialize the scanner state into a buffer.
+ *
+ * With hash-based storage, serialization is much more efficient:
+ * - Each identifier hash is only 9 bytes (8 bytes for hash + 1 byte for is_fstring flag)
+ * - The 1024-byte buffer can store ~113 nested bracket strings
+ * - This is far more than needed in practice
+ */
 unsigned tree_sitter_hy_external_scanner_serialize(
   void *payload,
   char *buffer
 ) {
-  Identifiers *ids = (Identifiers *)payload;
+  IdentifierHashes *hashes = (IdentifierHashes *)payload;
   uint32_t size = 0;
-  uint32_t step = sizeof(uint32_t);
-  uint32_t stepc = sizeof(int32_t);
-  *(uint32_t *)(&buffer[size]) = ids->size;
-  size += step;
+  
+  // Tree-sitter typically provides a 1024-byte buffer for serialization
+  const uint32_t max_size = 1024;
+  
+  // Check if we have enough space for the hash count
+  if (size + sizeof(uint32_t) > max_size) {
+    return 0;
+  }
+  
+  *(uint32_t *)(&buffer[size]) = hashes->size;
+  size += sizeof(uint32_t);
 
-  for (uint32_t i = 0; i < ids->size;) {
-    String *identifier = array_get(ids, i);
-    i++;
-    *(uint32_t *)(&buffer[size]) = identifier->size;
-    size += step;
-    for (uint32_t j = 0; j < identifier->size;) {
-      *(int32_t *)(&buffer[size]) = *array_get(identifier, j);
-      j++;
-      size += stepc;
+  for (uint32_t i = 0; i < hashes->size; i++) {
+    IdentifierHash *id_hash = array_get(hashes, i);
+    
+    // Check if we have enough space for this hash entry (8 bytes hash + 1 byte flag)
+    if (size + sizeof(uint64_t) + sizeof(uint8_t) > max_size) {
+      // Truncate: write how many hashes we actually serialized
+      *(uint32_t *)(&buffer[0]) = i;
+      return size;
     }
+    
+    *(uint64_t *)(&buffer[size]) = id_hash->hash;
+    size += sizeof(uint64_t);
+    
+    *(uint8_t *)(&buffer[size]) = id_hash->is_fstring ? 1 : 0;
+    size += sizeof(uint8_t);
   }
 
   return size;
@@ -255,23 +283,31 @@ void tree_sitter_hy_external_scanner_deserialize(
   if (length == 0) {
     return;
   }
-  Identifiers *ids = (Identifiers *)payload;
-  clear_identifiers(ids);
-  uint32_t count = 0;
-  uint32_t step = sizeof(uint32_t);
-  uint32_t stepc = sizeof(int32_t);
-  uint32_t size = *(uint32_t *)(&buffer[count]);
-  count += step;
-  for (uint32_t idc = 0; idc < size; idc++) {
-    String *str = ts_calloc(1, sizeof(Identifiers));
-    uint32_t id_size = *(uint32_t *)(&buffer[count]);
-    count += step;
-    for (uint32_t ids = 0; ids < id_size; ids++) {
-      int32_t ch = *(int32_t *)(&buffer[count]);
-      count += stepc;
-      array_push(str, ch);
+  IdentifierHashes *hashes = (IdentifierHashes *)payload;
+  clear_hashes(hashes);
+  
+  uint32_t offset = 0;
+  
+  if (offset + sizeof(uint32_t) > length) {
+    return;
+  }
+  
+  uint32_t count = *(uint32_t *)(&buffer[offset]);
+  offset += sizeof(uint32_t);
+  
+  for (uint32_t i = 0; i < count; i++) {
+    if (offset + sizeof(uint64_t) + sizeof(uint8_t) > length) {
+      break;
     }
-    array_push(ids, *str);
+    
+    IdentifierHash id_hash;
+    id_hash.hash = *(uint64_t *)(&buffer[offset]);
+    offset += sizeof(uint64_t);
+    
+    id_hash.is_fstring = *(uint8_t *)(&buffer[offset]) != 0;
+    offset += sizeof(uint8_t);
+    
+    array_push(hashes, id_hash);
   }
 }
 
@@ -280,7 +316,7 @@ bool tree_sitter_hy_external_scanner_scan(
   TSLexer *lexer,
   const bool *valid_symbols
 ) {
-  Identifiers *ids = (Identifiers *)payload;
+  IdentifierHashes *hashes = (IdentifierHashes *)payload;
 
   if (valid_symbols[BSID]) {
     lexer->log(lexer, "Expecting bracket string identifier");
@@ -318,7 +354,7 @@ bool tree_sitter_hy_external_scanner_scan(
     lexer->mark_end(lexer);
     // parse_identifier() should always return a token.  If it somehow
     // doesn't, treat it as an error.
-    ParseResult match = parse_identifier(lexer, ids);
+    ParseResult match = parse_identifier(lexer, hashes);
     if (!match.success) {
       lexer->log(lexer, "This should never happen");
       match.token = ERR;
@@ -331,7 +367,7 @@ bool tree_sitter_hy_external_scanner_scan(
   if (valid_symbols[BSC]) {
     // Store the current position.
     lexer->mark_end(lexer);
-    ParseResult match = parse_contents(lexer, ids);
+    ParseResult match = parse_contents(lexer, hashes);
     // parse_contents() can fail if there is nothing to parse.  We
     // don't consider that an error, because bracket string contents
     // can be empty.
@@ -347,7 +383,7 @@ bool tree_sitter_hy_external_scanner_scan(
   if (valid_symbols[BFSC]) {
     // Store the current position.
     lexer->mark_end(lexer);
-    ParseResult match = parse_fstring_contents(lexer, ids);
+    ParseResult match = parse_fstring_contents(lexer, hashes);
     // parse_fstring_contents() can fail if there is nothing to parse.
     // We don't consider that an error, because bracket string
     // contents can be empty.
@@ -365,7 +401,7 @@ bool tree_sitter_hy_external_scanner_scan(
   if (valid_symbols[BSEID] || valid_symbols[BFSEID]) {
     // Store the current position.
     lexer->mark_end(lexer);
-    ParseResult match = parse_ending_identifier(lexer, ids);
+    ParseResult match = parse_ending_identifier(lexer, hashes);
     // parse_ending_identifier() can fail, meaning the ending
     // identifier doesn't correspond to the currently active bracket
     // string.
@@ -375,7 +411,7 @@ bool tree_sitter_hy_external_scanner_scan(
       match.token = ERR;
     }
     if (match.token == BSEID || match.token == BFSEID) {
-      array_pop(ids);
+      array_pop(hashes);
     }
     // Something was parsed, therefore we want the end to update.
     lexer->result_symbol = match.token;
