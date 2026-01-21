@@ -1,8 +1,8 @@
-# Buffer Overflow Fix in External Scanner Serialization
+# Hash-Based Identifier Storage Fix
 
 ## Problem
 
-When editing files containing bracket strings with more than 1024 bytes between them, Neovim (and potentially other editors) would crash if an opening bracket `[` in the first bracket string was deleted.
+When editing files containing bracket strings, Neovim (and potentially other editors) would crash if an opening bracket `[` in a bracket string was deleted, causing the parser to treat a large amount of text as the bracket string identifier.
 
 ### Example that would crash:
 
@@ -12,40 +12,49 @@ aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 #[[]]
 ```
 
-Deleting either of the first two `[` characters would cause a crash.
+Deleting either of the first two `[` characters would cause a crash because the parser would try to store over 1024 bytes of identifier data.
 
 ## Root Cause
 
-The external scanner's `tree_sitter_hy_external_scanner_serialize()` function was writing to a fixed-size buffer (typically 1024 bytes provided by tree-sitter) without checking if it would exceed the buffer size. This caused a buffer overflow, leading to undefined behavior and crashes.
+The external scanner's serialization function was storing full bracket string identifiers in a fixed-size buffer (1024 bytes provided by tree-sitter). When an opening bracket was deleted, the parser would treat everything until the next `[` as the identifier, which could easily exceed 1024 bytes, causing a buffer overflow and crash.
 
 ## Solution
 
-Added bounds checking to the serialization function:
+Replaced full identifier storage with hash-based storage using the FNV-1a hash algorithm:
 
-1. **Before writing each piece of data**, we now check if there's enough space in the buffer
-2. **If we run out of space**, we gracefully truncate by:
-   - Updating the identifier count to reflect only what was actually written
-   - Updating the character count for partially written identifiers
-   - Returning the actual number of bytes written
+1. **Store hashes instead of full identifiers**: Each identifier is hashed to a 64-bit value
+2. **Compact serialization**: Each entry is only 9 bytes (8 bytes for hash + 1 byte for is_fstring flag)
+3. **Large capacity**: The 1024-byte buffer can now store ~113 nested bracket strings
+4. **Efficient matching**: When parsing ending identifiers, we compute the hash and compare it to the stored hash
 
-This ensures we never write beyond the buffer boundary, preventing crashes while maintaining parser functionality.
+### Benefits:
+- **No more buffer overflows**: Even extremely long identifiers (>1024 bytes) are reduced to 8-byte hashes
+- **Better scalability**: Can handle many more nested bracket strings
+- **Same functionality**: Hash collisions are extremely rare with FNV-1a on 64-bit hashes
 
 ## Technical Details
 
-The serialization format is:
-```
-[uint32_t: num_identifiers]
-For each identifier:
-  [uint32_t: identifier_length]
-  [int32_t: char1]
-  [int32_t: char2]
-  ...
+### Hash Function
+We use FNV-1a (Fowler-Noll-Vo) hash:
+```c
+uint64_t hash = 14695981039346656037ULL; // FNV offset basis
+for each character c:
+    hash ^= c
+    hash *= 1099511628211ULL; // FNV prime
 ```
 
-With bounds checking, if we run out of space:
-- We update `num_identifiers` at buffer[0] to reflect how many we actually wrote
-- We update the last identifier's length to reflect how many characters we actually wrote
-- The deserialization function will correctly read only what was written
+### Serialization Format
+```
+[uint32_t: num_hashes]
+For each hash:
+  [uint64_t: hash_value]
+  [uint8_t: is_fstring_flag]
+```
+
+### Storage Efficiency
+- Old approach: Variable size, could easily exceed 1024 bytes
+- New approach: 4 + (9 × num_identifiers) bytes
+- Maximum nested bracket strings: ~113 (vs. highly variable before)
 
 ## Testing
 
@@ -53,12 +62,15 @@ A test case has been added in `test/corpus/bracket_string_edge_cases.txt` to ens
 
 ## Files Modified
 
-- `src/scanner.c`: Added bounds checking to `tree_sitter_hy_external_scanner_serialize()`
+- `src/scanner.c`: Replaced full identifier storage with hash-based storage
 - `test/corpus/bracket_string_edge_cases.txt`: Added test case for large separations between bracket strings
 
 ## Impact
 
 This fix prevents crashes in Neovim and other editors when editing Hy files with bracket strings, particularly when:
+- Edits cause the parser to treat large amounts of text as identifiers
 - Multiple bracket strings are present in a file
-- There's significant content (>1024 bytes) between bracket strings
+- There's significant content between bracket strings
 - Edits are made to the opening brackets of bracket strings
+
+The hash-based approach is more robust and scalable than the previous full-identifier storage approach.
