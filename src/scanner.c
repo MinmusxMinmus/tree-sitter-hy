@@ -221,6 +221,22 @@ void tree_sitter_hy_external_scanner_destroy(void *payload) {
   ts_free(ids);
 }
 
+/**
+ * Serialize the scanner state into a buffer.
+ *
+ * IMPORTANT: Tree-sitter provides a fixed-size buffer (typically 1024 bytes)
+ * for serialization. This function MUST NOT write beyond this buffer size,
+ * as doing so causes undefined behavior and crashes in editors like Neovim.
+ *
+ * The bug this fixes: When editing files with bracket strings separated by
+ * more than 1024 bytes, and an opening bracket in the first bracket string
+ * is deleted, the parser state needs to be serialized. Without bounds checking,
+ * this could overflow the buffer and crash the editor.
+ *
+ * The fix: We now check before each write operation that we have enough space.
+ * If we run out of space, we truncate the serialization gracefully by updating
+ * the counts to reflect only what was actually written.
+ */
 unsigned tree_sitter_hy_external_scanner_serialize(
   void *payload,
   char *buffer
@@ -229,15 +245,43 @@ unsigned tree_sitter_hy_external_scanner_serialize(
   uint32_t size = 0;
   uint32_t step = sizeof(uint32_t);
   uint32_t stepc = sizeof(int32_t);
+  
+  // Tree-sitter typically provides a 1024-byte buffer for serialization
+  // We need to ensure we don't exceed this limit
+  const uint32_t max_size = 1024;
+  
+  // Check if we have enough space for the identifier count
+  if (size + step > max_size) {
+    return 0;
+  }
+  
   *(uint32_t *)(&buffer[size]) = ids->size;
   size += step;
 
   for (uint32_t i = 0; i < ids->size;) {
     String *identifier = array_get(ids, i);
     i++;
+    
+    // Check if we have enough space for this identifier's size
+    if (size + step > max_size) {
+      // Truncate: write how many identifiers we actually serialized
+      *(uint32_t *)(&buffer[0]) = i - 1;
+      return size;
+    }
+    
     *(uint32_t *)(&buffer[size]) = identifier->size;
     size += step;
+    
     for (uint32_t j = 0; j < identifier->size;) {
+      // Check if we have enough space for this character
+      if (size + stepc > max_size) {
+        // Truncate: adjust the identifier size we wrote
+        *(uint32_t *)(&buffer[size - step]) = j;
+        // And adjust the total identifier count
+        *(uint32_t *)(&buffer[0]) = i;
+        return size;
+      }
+      
       *(int32_t *)(&buffer[size]) = *array_get(identifier, j);
       j++;
       size += stepc;

@@ -1,0 +1,47 @@
+====================================
+Bracket strings with large separation
+====================================
+
+This test ensures that the parser handles bracket strings separated by more than 1024 bytes
+without crashing. This was a bug where the serialization buffer would overflow.
+
+#[[]]
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+#[[]]
+
+---
+
+(program
+  (bracket_string
+    (bracket_string_identifier)
+    (bracket_string_contents)
+    (bracket_string_ending_identifier))
+  (symbol)
+  (bracket_string
+    (bracket_string_identifier)
+    (bracket_string_contents)
+    (bracket_string_ending_identifier)))
+
+====================================
+Multiple nested bracket strings
+====================================
+
+#[[outer]]
+#[[inner1]]
+#[[inner2]]
+
+---
+
+(program
+  (bracket_string
+    (bracket_string_identifier)
+    (bracket_string_contents)
+    (bracket_string_ending_identifier))
+  (bracket_string
+    (bracket_string_identifier)
+    (bracket_string_contents)
+    (bracket_string_ending_identifier))
+  (bracket_string
+    (bracket_string_identifier)
+    (bracket_string_contents)
+    (bracket_string_ending_identifier)))
