@@ -73,7 +73,6 @@ static inline Hash *get_bs(Identifiers *identifiers) {
 static inline void clear_identifiers(Identifiers *identifiers) {
   for (Hash str; identifiers->size > 0;) {
     str = array_pop(identifiers);
-    array_delete(&str);
   }
   array_clear(identifiers);
 }
