@@ -1,6 +1,11 @@
-#+TITLE: tree-sitter-hy
+#+title: tree-sitter-hy
+#+options: toc:nil
 
 Tree-sitter grammar for [[https://hylang.org/][Hy]].
+
+/Psst, if you're reading this from GitHub, I'm moving to [[https://codeberg.org/MinmusxMinmus/tree-sitter-hy][Codeberg]].  If you're/
+/thinking about filing an issue or making a PR, please do it over there./
+/Thanks!/
 
 Originally planned to be based on [[https://github.com/kwshi/tree-sitter-hy][kwshi/tree-sitter-hy]], but I decided to try my
 hand from scratch.  I did have a look at [[https://github.com/kwshi/tree-sitter-hy/issues/1][this issue]], which noted a couple
