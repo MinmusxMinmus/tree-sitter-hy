@@ -1,4 +1,5 @@
 #+title: tree-sitter-hy
+#+author: MinmusxMinmus
 #+options: toc:nil
 
 Tree-sitter grammar for [[https://hylang.org/][Hy]].
