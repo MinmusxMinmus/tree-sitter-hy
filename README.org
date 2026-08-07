@@ -3,7 +3,7 @@
 
 Tree-sitter grammar for [[https://hylang.org/][Hy]].
 
-/Psst, if you're reading this from GitHub, I'm moving to [[https://codeberg.org/MinmusxMinmus/tree-sitter-hy][Codeberg]].  If you're/
+/Psst, if you're reading this from GitHub, I'm moving to [[https://git.disroot.org/MinmusxMinmus/tree-sitter-hy][Disroot]].  If you're/
 /thinking about filing an issue or making a PR, please do it over there./
 /Thanks!/
 
